@@ -19,3 +19,7 @@
       But this is also considered as interpreter.
       Java Intepreter
       
+ 3.) Float vs Double (4byte vs 8byte in space. Double has more precision with decimal points. By default everything with decimal precision are treated double in Java. 
+ But for some processors, float takes half space but not accurate on round off while double takes more space but is more precise. 
+ Nowadays there are processors optimised for Mathematical calculatiosn which can process double better than float.)
+      
