@@ -1,0 +1,21 @@
+1.) Compiler:
+      Converts highlevel language code(.java) to byte code(understandable by JVM)
+      Done by javac which is inside tools.jar
+      Steps:
+      1.) Parsing entire source file by reading it and stripping boundary characters such as {}.
+      2.) AST/ Abstract Syntax Tree creation by representing each expression and statement into a tree with class com.sun.tools.JCTree. Syntax validation of literals done.
+      3.) Desugar - extended for loops to normal iterators etc
+      4.) Type check/ Inference - To validate type of everything, method signatures etc. Done by traversing AST with the help of visitor pattern.
+      5.) Byte code conversion
+      6.) .class file writing
+2.) Interpreter:
+      'java' is app laucher as per Oracle doc (java <name of .class file for main program>). It gives a console. javaw is same as java but without console.
+      Startup Errors comes as popup window if any for javaw.
+      Line by line conversion from one language to another including syntax verification.
+      Laucher starts a runtime environement. A Java virtual machine.
+      For Java, interpreter is part of JVM/ runtime and it can translate byte code to machine code/ native instructions and runs immediately lin by line.
+      Eg: for runtime are Hotspot VM, Azul VM etc.
+      Nowadays there is JIT or Just In Time compiler which can optimize execution speed in JVM. What it does is cache machine code equivalent for frequently executing byte code parts.
+      But this is also considered as interpreter.
+      Java Intepreter
+      
