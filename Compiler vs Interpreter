@@ -20,6 +20,76 @@
       Java Intepreter
       
  3.) Float vs Double (4byte vs 8byte in space. Double has more precision with decimal points. By default everything with decimal precision are treated double in Java. 
- But for some processors, float takes half space but not accurate on round off while double takes more space but is more precise. 
- Nowadays there are processors optimised for Mathematical calculatiosn which can process double better than float.)
+      But for some processors, float takes half space but not accurate on round off while double takes more space but is more precise. 
+      Nowadays there are processors optimised for Mathematical calculatiosn which can process double better than float.)
+      Why char is 2byte in Java?
+      ASCII was 1byte. Numbers from 0-127 used to encode characters and symbols.
+      To include all languages people started using 128-255 as well which is part of 1 byte itself.
+      But all languages in universe were not fit in that.
+      So came unicode. It can use 2 byte 2^16 possibilities. This is what Java is used and that's why char is 2byte in Java.
+      encode -> convert to bytes
+      decode -> convert from bytes
+      codec -> logic to encode and decode in a format. Eg: codec for unicode is UTF-8 and UTF-16.
+      Unicode uses code points to prepresent each leter/ symbol in any language. It's standard. Uses U(unicode)+hex to indicate chars in the world.
+      UTF-8 Uses min 8bit to represent unicode chars. uses 1byte for 0-127. Above that it uses max 6bytes to represent in encoded form.
+      UTF-16 uses min 16bits to represent unicode characters
+      
+ 4.) Note: >=1.7 allows 20_0_0 considered as 2000
+     byte - 1byte
+     char - 2byte
+     short - 2byte
+     int - 4byte
+     float - 4byte
+     long - 8byte
+     double - 8byte
+     
+ 5.) switch case supports String only after >=1.7    
+ 6.) Constructors are for creating object or more precisely, it is to allocate memory for the object of the class.
+ 7.) class Constructor{
+            Constructor(Integer i){"int"}
+            Constructor(Long l){"long"}
+            
+            when we do;
+            new Constructor(10.5);// error comes since input is double and need to cast to int ot long to get accepted. If
+            Constructor(Object o){"any"}
+            was also present, no error comes since 10.5 will be considered and casted to Object.
+ 8.) Static variables are kept in class loader memory
+ 9.) By convension one public class per file name is followed in Java. 
+     It's for maintanability of code as well as to reduce burden of compiler to map public classes easily. 
+     If multiple public classes kept in one file, for compiler, it will be difficult to map .class files and source code.
+10.) Static Block:
+     When used in a public class without main, till 1.5, it used to execute static block and terminates with error as main is not found.
+     But from 1.6, it will compile but will not run showing error as main not found.
+     
+     If multiple static blocks are there, it followes the order of defining in code and execute one by one.
+     Internally in .class files what is shown on decompiling is, all static blocks are aggregated together.
+11.)
+      
+      
+      
+      
+      
+      
+      Proxy vs Reverse Proxy:
+      Proxy : dummy behind which our actual systems are masked and all requests goes to servers through this proxy.
+              anonymity, caching, blocking unwanted sites, geo fencing etc are advantages
+      
+      client 1
+                  \
+                       \
+      client 2     -          proxy     -  google server
+      
+                        /
+      client 3    /     
+      
+      ----------------------------------------------------------
+      Reverse Proxy: There will be a dummy server to which all client requests are coming and it will be routed to different services serving the same purpose.
+                     Best for micro services.
+                     traffic control, load balancing, caching of response for idempotent requests, logging, canary deployement
+                                                server 1
+                                          /
+      client      -     reverse proxy     -     server 2
+                                          \     
+                                                server 3
+      -----------------------------------------------------------
       
