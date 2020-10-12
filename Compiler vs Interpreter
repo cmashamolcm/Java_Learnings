@@ -63,9 +63,18 @@
      
      If multiple static blocks are there, it followes the order of defining in code and execute one by one.
      Internally in .class files what is shown on decompiling is, all static blocks are aggregated together.
-11.)
+11.) Inner class usage:
+     Outer{
+      Inner{
+      }
+      }
       
+      usage: Outer o = new Outer();
+             Outer.Inner i = o.new Inner();// Here, type is given as Outer class. Inner class. new is using outer object . new Inner class
+      Internally, creates Outer.class, Outer.class and Outer$Inner.class. Internally what it does is, creates a constructor for Inner which accepts outer and uses it.
       
+      For static inner classes,
+      Outer.Inner i = new Outer.Inner(); will work.
       
       
       
