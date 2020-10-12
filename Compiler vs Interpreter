@@ -76,8 +76,50 @@
       For static inner classes,
       Outer.Inner i = new Outer.Inner(); will work.
       
-      
-      
+12.) Iterator and Enhanced For Loop:
+     Enhanced for loop used to iterate whole set of data. We can consider as it's condition is length of array/ collection.
+     Internally, compiler converts enhanced for loop used over array into normal for loop.
+     In case of Collections, enhanced for loop/ for each is converted into iterator.
+13.) 2 dimentional array is array of arrays. If the arrays contained in 2D array is of variable length, this 2D array is called Jagged array(number of cols are not fixed).
+14.) Var args:
+     Treats the values as an array. Not a list.
+     
+15.) Inheritance:
+     For default methods in interface;
+     interface A{default show(){}}
+     interface B{default show(){}}
+     C implements A, B{
+            show(){
+                  A.super.show();//if need to invoke.
+            }
+     } //will give error to override show() since both have same default method.
+16.) Dinamic Method Dispatch:
+     When we use runtime polymorphism;
+     class A{public void show()}
+     class B extends A{public void show()}
+     class C extends A{public void show()}
+     
+     Now;
+     A a = new B();// Dynamic binding/ runtime polymorphism. Decides which object to be created and mapped at runtime.
+     a.show();    // Dynamic method dispatch. Decides which method to call based on bounding class. Here, of B
+     a = new C();// Dynamic binding/ runtime polymorphism. Decides which object to be created and mapped at runtime.
+     a.show();   // Dynamic method dispatch. Decides which method to call based on bounding class. Here, of C
+     
+     Dynamic method dispatch is required due to runtime polymorphism.
+     
+17.) encapsulation vs abstraction:
+     encapsulation: bind data to methods. Eg: make fileds private and make it accessible only via getters and setters. Ie; here it's visibility controlling.
+                    Why needed? For data safety. If exposed through methods, eve we can log access to the data rather than no clue of change in case of direct use of var.
+                                Can check if someone accessing is authorised to use before access in methods.
+                                It's data hiding behind methods.
+                    With the help of access modifiers            
+     abstraction: give only relevant details and hide other things.
+                  Eg: When we see a car, its internal parts are hidden.
+                  With the help of abstract classes/interfaces.
+                  Eg: expose only APIs as part of interface and implemnetation class methods will be hidden from the user of that interface.
+     
+     
+     
       
       Proxy vs Reverse Proxy:
       Proxy : dummy behind which our actual systems are masked and all requests goes to servers through this proxy.
