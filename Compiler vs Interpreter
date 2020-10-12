@@ -76,6 +76,21 @@
       For static inner classes,
       Outer.Inner i = new Outer.Inner(); will work.
       
+      We can define classes inside a method as well.
+      class A{
+          void test(){
+            class X{
+                  void show(){
+                        System.out.println("Test X");
+                  }
+            }
+            
+            new X().show();//will work. Can use annonymous classes also instead.
+         }
+      }
+      
+      This type of classes inside methods will create byte code in files as A$1X.class, A$2X.class etc.
+      
 12.) Iterator and Enhanced For Loop:
      Enhanced for loop used to iterate whole set of data. We can consider as it's condition is length of array/ collection.
      Internally, compiler converts enhanced for loop used over array into normal for loop.
@@ -117,9 +132,50 @@
                   Eg: When we see a car, its internal parts are hidden.
                   With the help of abstract classes/interfaces.
                   Eg: expose only APIs as part of interface and implemnetation class methods will be hidden from the user of that interface.
+18.) Boxing/ Wrapping - primitive to Wrapper. (Integer i = Integer(10);)
+     Unboxing/ Unwrapping - wrapper to primitive. (int ii = i.intValue();)
+     Autoboxing - wraps automatically. Eg: Integer i = 10; (casts automatically to Integer from int)
+     Autounboxing - unwraps automatically. Eg: int ii = i; (casts to int from Integer)
      
+     When we do int ii = i.intValue(), compiler treats it like ii = i; with auto unboxing in byte code. Can check by decompiling.
+     Why we need wrappers?
+     To use with some frameworks which supports non-primitive types only.
+     Also it helps to use with generics. Primitives are not treated as Objects. But Collection<E> expects an object type. 
+     So, Collection<int> is not supported whereas Collection<Integer> is possible. That's the relavance of primitive wrappers.
+     But primitives are faster than wrappers as it does not have autoboxing and unboxing overhead.
+19.) Abstract classes vs Interfaces after Java8:
+     Object creaton and constructor is possible only for abstract classes.
+     Fields are public static final for interfaces.
+     No final methods allowed in interface. Only public static default strictfp(
+     strict floating point precision for calculations irrespective of platforms. Can be used on with class, interface or methods. 
+     If class A is strictfp doesn't mean it's children are also strictfp. But parent's methods will be strictfp.) abstract methods allowed.
      
-     
+20.) When to use abstract class vs interface:
+     Use interfaces when a standardized API contract is to be maintained.
+     Interfaces enables classes inheriting interface to inherit other class if required in future. Abstract classes cannot as multiple inheritance with class is not there in Java.
+     Interface can be used for more generic methods.
+     Abstract classes are preferred when closely related is the child classes.  
+21.) Anonnymous Classes:
+     Used to avoid creation of another child class which is not having much reusability. Ie; if object is of one time use, narrow scoped childcClasses are created this way.
+     Internally, 
+     class A{void show(){System.out.println("A");}}
+     class Main{
+            public static void main(String[] args){
+                  new A(){
+                        show(){
+                           System.out.println("Annonymous");   
+                        }
+                  }().show();// output Annonymous
+                  
+                  //or
+                  new A(){
+                  }().show();// gives output A
+            }
+      
+      A.class, Main$1.class, Main$2.class etc will be class files equivalent to actual class and annonymous classes of the same. $Count is added to name of class calling it.
+
+
+
       
       Proxy vs Reverse Proxy:
       Proxy : dummy behind which our actual systems are masked and all requests goes to servers through this proxy.
