@@ -241,7 +241,10 @@
       Runtime Exception: Due to negligence from developers. Recoverable. Eg: null pointer
       Exception: Programatically recoverable but unexpected condition outside of code.Eg: DB down
 
-
+ 28.) Multi exception catch, try with resource etc came from 1.7.
+      But multi-catch exceptions should be disjoint.
+      Ie;
+      catch(Exception | IOException e) // is error as IOException is child of Exception.
       
       Proxy vs Reverse Proxy:
       Proxy : dummy behind which our actual systems are masked and all requests goes to servers through this proxy.
