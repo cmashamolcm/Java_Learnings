@@ -246,6 +246,37 @@
       Ie;
       catch(Exception | IOException e) // is error as IOException is child of Exception.
       
+ 29.) Try with Resource:
+      try(AutoTry at = new AutoTry()){
+      }
+      Note: Try can be given alone if AutoClosable's close() method is not throwing exception 
+      Eg:
+      class AutoTry extends AutoClosable{
+            public void close() /*throws Exception*/{
+            //hai
+            }
+      }
+      or the method in which we use try with resource throws the exception from close() method explicity.
+      ie;
+      void method() throws IOException{
+            try(AutoTry at = new Autotry()){
+            }
+      }
+      
+      Eg:
+      class AutoTry extends AutoClosable{
+            public void close() throws IOException{
+            //hai
+            }
+      }
+      
+      
+      
+      
+      
+      
+      
+      
       Proxy vs Reverse Proxy:
       Proxy : dummy behind which our actual systems are masked and all requests goes to servers through this proxy.
               anonymity, caching, blocking unwanted sites, geo fencing etc are advantages
