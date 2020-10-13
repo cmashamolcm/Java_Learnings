@@ -197,14 +197,49 @@
 24.) Exception Handling:
      Object
      |
-     Exception
+     Throwable
+     |                              |
+     Exception             ---|     Error
      |                        |
      RuntimeException         Other compile time exceptions(IO exception, No such method, class not found etc)
      |
      unchecked exceptions(null pointer, index out of bound, class cast, number format etc)
+     test(){
+      try{
+            return 5;
+      }catch(Exception e){
+            return 10;
+      }finally{
+            return 20;
+      }
+     }
      
+     returns 20 irrespective of if normal flow or exception occurs.
+     If System.exit(0); in try or catch vlock, then only finally block is skipped.
      
+     try{
+      doException();
+      System.exit(0);
+      }catch(Exception e){
+      }finally{
+      }
+      
+      Comes to try, catch and finally if exception throws.
+      Else, 
+      terminates at System.exit(0); itself.
+      
+      If Parent class ethod throws a check exception, child may or may not throw it. But child cannot throw a checked exception which is not defined in Parent.
+      But child method can throw any number of runtime exceptions.
      
+ 25.) Error:
+      Error extends Throwable{}. This is for serious blockers. Eg: LinkageError, OutOfMEmoryError, StackOverFlowError, NoClassDefFoundError etc.
+      Don't try to catch it.
+      It's child classes are treated like runtime exceptions itself. But not extending RuntimeException.
+      
+ 26.) Runtime Exceptions are thrown by JVM/ runtime system at runtime.     
+ 27.) Error: Programatically unrecoverable. Eg: out of memory
+      Runtime Exception: Due to negligence from developers. Recoverable. Eg: null pointer
+      Exception: Programatically recoverable but unexpected condition outside of code.Eg: DB down
 
 
       
