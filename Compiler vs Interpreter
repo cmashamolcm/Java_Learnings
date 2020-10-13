@@ -149,7 +149,7 @@
      No final methods allowed in interface. Only public static default strictfp(
      strict floating point precision for calculations irrespective of platforms. Can be used on with class, interface or methods. 
      If class A is strictfp doesn't mean it's children are also strictfp. But parent's methods will be strictfp.) abstract methods allowed.
-     
+     Interfaces not accepts private or protected for any tpe of methods or variables.
 20.) When to use abstract class vs interface:
      Use interfaces when a standardized API contract is to be maintained.
      Interfaces enables classes inheriting interface to inherit other class if required in future. Abstract classes cannot as multiple inheritance with class is not there in Java.
@@ -173,7 +173,38 @@
             }
       
       A.class, Main$1.class, Main$2.class etc will be class files equivalent to actual class and annonymous classes of the same. $Count is added to name of class calling it.
-
+22.) Funcational Interfaces:
+     Only one method.
+     Can use @FuncationalInterface for type safety at compile time itself.
+     Lambda expressions are used to provide implementations of functional interfaces as a replacement of annonymous classes.
+     interface I{void show(){}}
+     I i = ()->{System.out.println("Hai from lambda");} is the format. ()->{} is method body for show method.
+     Funcational interface can have static or default methods. But only one abstract method.
+23.) package-info.java:
+     File that can hold info related to a package.
+     It can hold annotations applicable for all classes of a package etc.
+     Mainly for documenting and annotating.
+     Eg: 
+     package-info.java
+     -----------------
+     /**
+     *@author asha
+     */
+     @Depricated// this annotation is package scope. So can be used. But when we use classes in other packages, no deprication warning comes. 
+     //But for a class inside this package, the package com.basic's basic will be striped to indicate as depricated.
+     package com.basic;
+     
+24.) Exception Handling:
+     Object
+     |
+     Exception
+     |                        |
+     RuntimeException         Other compile time exceptions(IO exception, No such method, class not found etc)
+     |
+     unchecked exceptions(null pointer, index out of bound, class cast, number format etc)
+     
+     
+     
 
 
       
