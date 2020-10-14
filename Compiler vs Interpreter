@@ -288,18 +288,62 @@
  31.) Thread.yeild():
       ---------------
       Indicates that this current thread is ready to release it's processor since it is ok to delay it's task for a while. Scheduler can accept it or can neglect it.
+      Not much recommended to use. Use only for bench marking etc as per doc.
+      If OS scheduler is time sliced, it will be oever burden since yeild gives a selection time where chance is there for selection of yeilded thread.
       t1.join():
       ---------------
       Indicates that the thread calling t1.join() have to wait() till the thread t1 finishes it's job.
       object.wait():
       ---------------
       Asks current thread using this object to wait for sometime releasing all holding resources and go to waiting threads. If lucky enough, will get chance to go live soon.
+      Give only inside sync block. Else IllegalMonitorStateException comes since the current thread is not owner of this object's monitor.
       object.notify():
       ---------------
-      Indicates that this object is free to be used by threads who all are waiting for that particular object. But 
+      Indicates that this object is free to be used by threads who all are waiting for that particular object. But selection of one eligible thread is done by scheduler.
+      Give only inside sync block.
       object.nofifyAll():
       ---------------
       informs all waiting threads that this object is free to be used now. Who ever wins, can take it.
+      Give only inside sync block.
+ 32.) notify vs notifyAll:
+      Use notify if any specific reason is there to wake up one thread at a time. Else use notifyAll.
+      If n threads are waiting on an object and each of them are going to do different type of operations on notification, it's better to use notifyAll().
+      If there is a special case of doing something by one thread at a time is allowed, go for notify().
+      
+ 33.) Startvation:
+      ------------
+      Due to lack of priority, a thread waits indefinitly to get a chance for processor.
+      
+      Racce Condition:
+      ----------------
+      Multiple threads are trying to change the same data and end up doing it together and gets wrong value.
+      Eg: b= true;
+      t1 changes it to false if it was true.
+      By the time t1 changing, t2 changed it to false.
+      So, now t1 should ideally not make it false as it's already false. But end up in chnaging by t1 as well.
+      This is a race condition.
+      Atomic variables can avoid this. Else proper locking/ synchronization can do.
+      
+      Deadlock:
+      ---------
+      Due to T1 waits for T2 and T2 waits for T1 to release the resources which never happens.
+      Priority Inversion:
+      Waiting of a high priority thread to get execution chance due to a low priority thread execution in progress, 
+      actually the high priority thread becomes similar to a low priority one, waiting. This situation is priority inversion.
+      JVM resolves this problem by priority inheritance where JVM scales the currently running low priority thread 
+      to the same priority of the high priority one came in. Then once the exceuiton of enhanced proirity thread is done, 
+      gives control to that high priority thread came in.
+      Most JVMs prefer to use OS schedulers to get rid of such issues as OS uses time slicing as well. 
+      Time slicing helps to avoid starving of equal priority threads.
+      
+ 34.) Collections:
+      1.2 - Collections
+      1.5 - Generics
+      1.7 - Diamond
+ 35.) For LinkedHashSet, internally uses HashSet. This hashset uses map internally. So, map used will be HashMap or LinkedHashMap accordingly.
+ 36.) Collections.java:
+      sort() expects a list of Comparable(compareTo(otherObj)) type. We can ovveride how to sort using Comparator's compare(a, b) method and pass it to sort() method..
+ 
       
       
       
