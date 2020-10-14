@@ -269,8 +269,37 @@
             //hai
             }
       }
+ 30.) Threads:
+      For:
+      1.)Efficient utilization of resources(processor cores)
+      2.)Do multiple tasks at the same time to achieve a single process result.
+      3.)Achieve async(threads to serve multiple requests in web servlets)
+      Parallelism vs Concurrency:
+      Parallel - 2 people doing same or different tasks independently(Eg: students writing their exams in parallel).
+      Concurrent - Interruptability. Resource is only one and 2 people are sharing it time sliced(Eg: cooking and office work done by one person interruptably).
       
+      Parallelism can be related to drive  through 8 line road
+      whereas
+      Concurrency is drive in a single line road with good traffic. Gaps are used by various cars to reach destination.
       
+      Or
+      2 queues to same cashier(shared resource) is concurrency.
+      2 queues to two cashiers(non-shared resources) is parallelism.
+ 31.) Thread.yeild():
+      ---------------
+      Indicates that this current thread is ready to release it's processor since it is ok to delay it's task for a while. Scheduler can accept it or can neglect it.
+      t1.join():
+      ---------------
+      Indicates that the thread calling t1.join() have to wait() till the thread t1 finishes it's job.
+      object.wait():
+      ---------------
+      Asks current thread using this object to wait for sometime releasing all holding resources and go to waiting threads. If lucky enough, will get chance to go live soon.
+      object.notify():
+      ---------------
+      Indicates that this object is free to be used by threads who all are waiting for that particular object. But 
+      object.nofifyAll():
+      ---------------
+      informs all waiting threads that this object is free to be used now. Who ever wins, can take it.
       
       
       
