@@ -31,13 +31,141 @@
 10.)-Completable:
       Notify on error or completion only.
 11.) Creating Observable:
+     --------------------
       1.)With Observable.just:
         Observable.just(1, 2, 3, 4, 5);//This is creation. But starts emitting only after subscription.
+        just returns Observable object itself.
         So, 
         Observable.just(1, 2, 3, 4, 5).subscribe(System.out::prinltn);// action to be done with changes is specified inside subscribe method.
         just() have overloaded method with 10 arguments of same type(can be object type as well. Eg: 12, 2, 3, "Asha") at max.
         Above that if we want to use, need to use something with collection.
-      2.)With Observable<Integer>
+      2.)With fromIterable:
+        Observable<Integer> observable = Observable.fromIterable(Arrays.asList(1, 2, 3, 4, 5));
+        observable.subscribe(System.out::println);
+      3.)With create:
+        This uses emitter.
+        Observable<Integer> observable = Observable.create((emitter)->{// this emitter is of thype ObservableEmitter. 
+                                                                       //Emitter have methods such as onNext(), onError(), onComplete() etc.
+                
+            });//create expects an ObservableOnSubscribe interface. It has only one method.
+                                        //subscribe(ObservableEmitter). So, use lambda to provide it.
+                                        //This won't feed any data to observer. To do that,
+                                        // use emitter.onNext();
+                                        
+                                        Ie;
+                                      Observable<Integer> observable = Observable.create((emitter)->{
+                                            emitter.onNext(1);
+                                            emitter.onNext(2);
+                                      });
+                                       and then do;
+        observable.subscribe(System.out::println();
+        
+        With emitter,
+        Observable<Integer> emittedObj = Observable.create(emitter->{
+            emitter.onNext(1);
+            emitter.onNext(1);
+            emitter.onError(new Exception("Emission Erroroorororor"));
+        });
+
+        emittedObj.subscribe(System.out::println, (err)->{
+            System.out.println(err.getMessage());
+        });// will print 1, 2, 3, 4, 5 and then Emission Error on error.
+        
+        To do something on completion;
+        Observable<Integer> emittedObj = Observable.create(emitter->{
+            emitter.onNext(1);
+            emitter.onNext(1);
+            emitter.onComplete();
+        });
+
+        emittedObj.subscribe(System.out::println, (err)->{
+            System.out.println(err.getMessage());
+        }, ()->{
+            System.out.println("Completed");
+        });
+        
+        
+        emission of null value from observable is not allowes from rxJava2.x.
+        It gives error.
+        
+        
+        Observable<Integer> emittedObj = Observable.create(emitter->{
+            emitter.onNext(1);
+            emitter.onNext(1);
+            emitter.onNext(null);
+        });
+
+        emittedObj.subscribe(System.out::println, (err)->{
+            System.out.println(err.getMessage());
+        });// prints error "onNext called with null. Null values are generally not allowed in 2.x operators and sources."
+12.)Observer/ Subscriber:
+        Use method subscribe(observer interface);
+        Eg:
+        Observable<Integer> obsToAccept = Observable.fromIterable(Arrays.asList(1, 2, 3 ,4 , 5));
+        obsToAccept.subscribe(new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                System.out.println("Subscribed");
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                System.out.println("On Next" + integer);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                System.out.println("Error");
+            }
+
+            @Override
+            public void onComplete() {
+                System.out.println("Complete");
+            }
+        });
+        
+13.)All observables from just(), fromIterable(), create() are cold. Any subscribers can consume any time.
+    Because;
+     emittedObj.subscribe(System.out::println, (err)->{
+            System.out.println(err.getMessage());
+        }, ()->{
+            System.out.println("Completed1");
+        });
+
+        emittedObj.subscribe(System.out::print, (err)->{
+            System.out.print(err.getMessage());
+        }, ()->{
+            System.out.println("Completed2");
+        });
+        will print values emitted from emittedObj.
+        Then how can we make hot observables:
+ 14.)Create hot observable:
+        Use just().publish(); or create().pusblish() or fromIterable().publish().
+        This will convert observable coming from cold methods into hot observable.
+        This is called ConnectableObservable.
+        
+        System.out.println("Connectable");
+        Observable<Integer> emittedObj = Observable.create(emitter->{
+            emitter.onNext(1);
+            emitter.onNext(1);
+        });
+        ConnectableObservable<Integer> published = emittedObj.publish();
+
+        published.subscribe(System.out::println, (err)->{// prints 1 1 when connect() is called.
+            System.out.println(err.getMessage());
+        }, ()->{
+            System.out.println("Completed1");
+        });
+        published.connect();
+
+        published.subscribe(System.out::print, (err)->{// nothing prints here since the emission finished at the time of calling published.connect();
+            System.out.print(err.getMessage());
+        }, ()->{
+            System.out.println("Completed2");
+        });
+        
+        
+                
       
       
       
