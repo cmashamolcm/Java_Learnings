@@ -1,0 +1,59 @@
+1.) Reactive extension for Java
+2.) Concept is, when a change happens to something, it should be informed to who ever substribed for it.
+    Eg: 
+    int a = 10;
+    int b = a;
+    Now, when a = 20; when usually b will remain 10 t=itself.
+    But in real life, it should be 20 as it's refering to a itself.
+    In reactive world, we can make b point to 20.
+3.) Uses Observable pattern here.
+4.) 3 Os:
+    Observer
+    Observable
+    Operator
+    
+5.) Observable -----push to------> Substriber/ Observer
+    Observer/Substriber -----listen/ follow up with----> observable
+    
+    Operator is intermediator who can manipulate/ transform the data before it reaches observers.
+    observable -------------<operator>---------->observer
+6.) Observer can just receive changes or take action accordingly.
+7.) Observables
+    -Hot - live performance; When a subscriber is missing to receive, it won't republish it further.
+    -Cold - Recorded type; When a subscriber miss it, can replay and watch it. Not missing that event.
+    -Connectable - A cold observable converted into cold. 
+                  Ie; Eg: a movie dvd is cold, but if we says, at 9 I will start it and if subsriber want to watch, can come, else miss some part.
+8.)- Single Observable:
+      Notifies observer only once. In success or error. But atleast once for sure.(exactly 1)
+      Eg: Took a ticket for a show. Gets notification if it's started or cancelled.
+9.)- May be:
+      Notify on success, failure or cancel. But may or may not get informed.(min 0, max 1)
+10.)-Completable:
+      Notify on error or completion only.
+11.) Creating Observable:
+      1.)With Observable.just:
+        Observable.just(1, 2, 3, 4, 5);//This is creation. But starts emitting only after subscription.
+        So, 
+        Observable.just(1, 2, 3, 4, 5).subscribe(System.out::prinltn);// action to be done with changes is specified inside subscribe method.
+        just() have overloaded method with 10 arguments of same type(can be object type as well. Eg: 12, 2, 3, "Asha") at max.
+        Above that if we want to use, need to use something with collection.
+      2.)With Observable<Integer>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+Notes:
+------
+Generics cannot be applied for Constructor declaration as well as while caling sttaic methods.
+Eg: Test<T>(){
+    } for Test class gives error.
+    Test<T extends number>(){
+    } for Test class gives error.
+    
+    Also,
+    
