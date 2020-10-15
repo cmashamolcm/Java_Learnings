@@ -21,7 +21,7 @@
 7.) Observables
     -Hot - live performance; When a subscriber is missing to receive, it won't republish it further.
     -Cold - Recorded type; When a subscriber miss it, can replay and watch it. Not missing that event.
-    -Connectable - A cold observable converted into cold. 
+    -Connectable - A cold observable converted into hot. 
                   Ie; Eg: a movie dvd is cold, but if we says, at 9 I will start it and if subsriber want to watch, can come, else miss some part.
 8.)- Single Observable:
       Notifies observer only once. In success or error. But atleast once for sure.(exactly 1)
@@ -163,6 +163,55 @@
         }, ()->{
             System.out.println("Completed2");
         });
+  15.) Observable Error:
+        Create errors which are observable.
+        Observable<Throwable> errObs = Observable.error(new Exception("Hai"));
+        errObs.subscribe(()->{//if data was there}, (err)->{Syetm.out.println("Error" + err.hashCode())});
+        errObs.subscribe(()->{//if data was there}, (err)->{Syetm.out.println("Error" + err.hashCode())});
+        
+        If we are not giving error handling lambda, while running, error gets thrown.
+        
+        Both will print same hashcode. Observable pushes same err object to both.
+        But;
+        if we want different error objects to be pushed to different customers can use observable.error(callable);
+        Eg:
+        // diff error obj pushed to diff subscribers
+        Observable<Throwable> observableCallable = Observable.error(()->new Exception("Obs Error"));
+        observableCallable.subscribe(System.out::println, (err)->{System.out.println(err.getMessage() + err.hashCode()); });
+        observableCallable.subscribe(System.out::println, (err)->{System.out.println(err.getMessage() + err.hashCode());});
+        prints different hashcode for error object.
+        
+  16.) Empty & Never Observables:
+        Empty - will return empty instead of null. Ie; it just don't give anything. Just simply ends up onComplete().
+        Never is observable for testing purpose. Which neither emits or not completes.
+        
+        Observable empty = Observable.empty();// same way, Arrays.asList(1, 2).stream().findAny();//optional - avoid null
+        empty.subscribe((object)-> System.out.println("anything"), (err)->{}, ()-> System.out.println("Finished"));
+        //prints Finished.
+
+        Observable never = Observable.never();
+        never.subscribe((object)-> System.out.println("anything"), (err)->{}, ()-> System.out.println("Finished"));
+        //prints nothing.
+  17.) Observable with Range:
+        Observable<Integer> rangeForInt = Observable.range(1, 10);
+        rangeForInt.subscribe(System.out::println);
+        same way as;
+        IntStream.range(1, 10);
+  18.) Defer:
+        To make an observable change according to some value. Here, when count count changes, prints 1-20 in second case. First case prints 1-10.
+        static int count. = 10;
+        Observable<Integer> rangeForInt = Observable.defer(()-> Observable.range(1, count));
+        rangeForInt.subscribe(System.out::println);
+        count = 20;
+        rangeForInt.subscribe(System.out::println);
+        
+        One more eg: Here output comes as 120 since count got updated. Here callable is used and is invoked everytime on subscription.
+        observable<Integer> ob = Observable.defer(()-> Observable.create((emitter)->{
+            int c = count;
+            emitter.onNext(c+10);
+        }));
+        count = 100;
+        ob.subscribe(System.out::println);
         
         
                 
@@ -185,3 +234,28 @@ Eg: Test<T>(){
     
     Also,
     
+For async, Caallback(void return), Future, CompletableFuture for async with return value.
+REST APis are sync and blocking (200 threads per 200 req by tomcat)
+Dataflow is based on event/message driven.
+Request comes, returns immediately. Then events are send on result fetching completed.
+3 states:
+onNext() - steam events
+onCompletion()
+onError()
+
+Back Pressure: Giving feedback to fast systems if needed to slow down.
+
+Reactive Stream Specs:
+4 interfaces
+publisher (data source) - subscribe() returns Subscription object to the subscriber.
+subscriber (data accepter) - onSubscribe(), onNext(), onError(), onComplete()
+subscription - request(), cancel()
+processor - subscriber + publisher
+
+Reactor - Pivotal. With springboot
+Reactive Types:
+Mono - 0-1 element class
+Flux - 0-N elements class
+
+
+Flux/Mono.just().map().subscribe(action);
