@@ -1,0 +1,32 @@
+1.) Why nomonolith?
+    Very complex
+    Difficult to maintain
+    Slow development
+    Entire app redeployement for small changes
+    Resource required to run services will be more
+    Limited scaling
+    Unreliable
+    Inflexible to upgrade to new frameworks
+2.) Multiple small set of services interacting with each other to solve a single problem.
+    Eg: e-commerce sites can have payment, cart, checkout services etc.
+    
+    
+    
+                  indentity provider                               |              |
+    client ------------------------------API gateway---------------|microservices |-------------remote services, databases
+                                                                   |              |
+                                                                   
+                                                                          |
+                                                                          |
+                                                                   discovery service
+3.) Features:
+    Language independent
+    Small
+    Easy to manage and maintain
+    Loosely coupled
+4.) Advantages:
+    Independent developement
+    Independent deployement
+    Manageable
+    Fault isolation (one failure not makes entire app down)
+    Granular scaling (each service can be scaled)
