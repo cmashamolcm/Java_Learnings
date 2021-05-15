@@ -1,4 +1,4 @@
-package com.java9.features;
+package main.java.com.java9.features;
 
 public class PrivateMethodsInInterface {
 

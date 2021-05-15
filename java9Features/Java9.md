@@ -47,5 +47,18 @@
       Then add exports and requires into it.
     * exports : Indicates the packages from this module exposed for public use.
     * imports : indicates the packages which are mandatory for smooth functioning of this module.
+    
+    * <b>JLink</b> helps to build jars by adding only required dependencies. Even from jmods.
+4. Collection Factory:
+    * List.of(), Set.of() etc which will return immutable collections. If tries to modify, UnsupportedOperationException comes.
+5. Stream Improvements:
+    * takeWhile(), dropWhile(), Optional.of(E).stream()
+6. Private Methods In Interface:
+    * Defaults will be public. So, private methods helps to write more clean code with internal methods.
+    * It won't be accessible from other places. Static methods within interface also cannot use private methods.
+    * An instance cannot be created and from static context, without instance, private non-static methods cannot be called.
+7. HTTP2 and Websocket Support Improvements
+8. multi-release support Jars. Maintain class files for different versions of Jar and use it only if the JVM version is matching with the version of class file.
+   Else it will remain silent.
    
     
