@@ -7,6 +7,7 @@
     4. Private methods in interface
     5. Http2 support
     6. Multi release jars
+    7. Improvement for try-with-resource. Can hold effectively final variables defined outside.
 2. JSHELL:
     * Interactive Console /REPL(Read Evaluate Print Loop) for validating and testing Java code snippets.
     * Command: jshell
@@ -60,5 +61,23 @@
 7. HTTP2 and Websocket Support Improvements
 8. multi-release support Jars. Maintain class files for different versions of Jar and use it only if the JVM version is matching with the version of class file.
    Else it will remain silent.
+9. Try-Catch with resource is improved from Java 7 to accept effectively final resource variables in it.
+   Previously,only;
+   try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))){
+   }catch (Exception e){}
+   was supported.
+   But now;
+   BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+   try(br){
+        }catch (Exception e){}
+   is also possible.
+   But;
+   If;
+   BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+   br = new BufferedReader(new InputStreamReader(System.in));
+   try(br){
+   }catch (Exception e){}
+   is not allowed.
+   br got modified. So, not effectively final.
    
     
