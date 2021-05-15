@@ -6,6 +6,7 @@
     4. Streams
     5. New Date and Time classes
     6. Static and default methods in interface
+    7. Metaspace(part of native memory) replaced PermGen space.
 2. OOP vs Functional Programming:
     * OOPs is based on objects and any line of code have to be attached to an object or class.
     * Functional programming is more focused on functions than classes
