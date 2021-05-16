@@ -8,6 +8,7 @@
     5. Http2 support
     6. Multi release jars
     7. Improvement for try-with-resource. Can hold effectively final variables defined outside.
+    8. G1 GC is defaulted.
 2. JSHELL:
     * Interactive Console /REPL(Read Evaluate Print Loop) for validating and testing Java code snippets.
     * Command: jshell
