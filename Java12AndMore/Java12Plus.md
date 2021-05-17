@@ -31,6 +31,15 @@
 1. Switch expression is made part of standard. So, can use in production.
 
 ****
+##OpenJDK 14:
+****
+1. Java 14's open source version
+2. Made switch expression production ready
+3. No more CMS GC
+4. More readable null pointer exception. Exact variable will be printed.   
+   Eg: Cannot invoke "String.isBlank()" because "str" is null
+3. 2020 March
+****
   ##Java 15:
 ****
 1. record class
@@ -45,3 +54,8 @@
      
    }
 Rest of the part including getters, setters, toString, hashCode, equals0 etc will be taken care of by itself.
+
+****
+##OpenJDK 16:
+****
+1. Current latest as on 2021 May
