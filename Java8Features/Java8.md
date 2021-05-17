@@ -132,3 +132,30 @@ Functional interfaces can be directly represented by it.
     Note: When we call .now() etc without specifying time zone, it takes system time zone.
     
     Note: When we call, LocalDate.parse(""); it expects yyyy-mm-dd format by default.
+
+21. ###Parallel vs Sequential Streams:
+****
+
+1. Sequential works in single thread, single core. Parallel stream uses multiple cores.
+2. Sequential gives ordered outcomes whereas parallel stream gives different order in each execution.
+3. Two ways to create parallel streams.
+   * Collection's .parallelStream()
+   * BaseStream.parallel(); Eg: Stream.of(1).parallel();
+4. There is BaseStream.sequential(); also.
+   * Stream.of(1).sequential();
+   * Stream.of(1).parallel().sort().sequential();
+5. Parallel Stream Steps:
+        
+    1. Split data
+    2. Apply operation
+    3. Combine
+6. When we;
+   Stream.of(1, 2, 3, 4, 5).parallel().forEach(p->System.out.println(Thread.currentThread().getName()));
+   It will print names of parallel threads. It will be of ForkJoinPool.commonPool-worker-1, 2, 0 etc.
+7. Map vs FlatMap:
+    * map() -> returns a stream of data. Stream<R>
+    * flatMap() -> returns a stream but accepts also is a stream. It's like accept streams as input and process those streams internally and returns a single stream as outcome.
+    * Stream of streams is input.Stream comes as output.
+
+Note:
+    * Intermediate operations and terminal operations.
