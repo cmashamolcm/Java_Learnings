@@ -62,6 +62,7 @@
          5. Native Method Stack    
          
  7. <b>Execution Engine</b>  
+ 
          1. JIT Compiler - optimize machine code
          2. HotSpot Profiler - helps to get staticstics to optimize machine code by JIT Compiler
          3. GC - Clean up heap
