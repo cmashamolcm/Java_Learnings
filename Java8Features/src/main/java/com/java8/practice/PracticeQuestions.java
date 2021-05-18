@@ -71,7 +71,7 @@ public class PracticeQuestions {
 
     }
 
-    private static List<Student> getStudents() {
+    public static List<Student> getStudents() {
         Student student1 = new Student(
                 "Jayesh",
                 20,
