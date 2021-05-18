@@ -138,4 +138,108 @@
       8. -Xmx: 256m
       9. -verbose:gc etc can capture gc details.
       10. JHAT - Java heap analizer tool
-      11. 
+      
+9. String:
+
+         1. Immutable
+         2. java.lang.String
+         3. String literals are stored in string pool. Previously it was part of method area. Now string constant pool is part of heap itself from 1.7 ownwards.
+         4. String created with new arepart of heap itsef.   
+         5. new String("Hello").intern(); will give String from pool.
+         6. String is used extensively, so it make sense to cache it.
+         7. Why is string immutable is 
+             * to make string pool consistant
+             * thread safe
+             * cache the hashcodes.
+         9. Can use Pattern.compile("abc") and Pattern.matcher(str) to find repeatitions of abc in str.
+         10. .substring() has memeory leackage issue till 1.7 as it was keeping str within substring. 
+         11. str was kept in value array and only offsets were changing. Now its solved.  
+         12. StringBuilder is not thread safe wheras StringBuffer is thread safe.
+         13. Mostly we use builder.
+         14. Nowadays concatination with + internally uses builder itself. So, no overhead there.
+         15. Never store passwords in string. Can use char array instead.
+ 10. Maps:
+      
+      1. HashTable:
+         now extends Map.
+         Thread safe with methods synchronized
+         Its overhead can be good for safe writes but slow if multiple reads happens.
+         No null keys or null values allowed
+         Intial size = 11.
+         
+      2. HashMap:
+         Not thread safe
+         Orderof key is not guaranteed
+         Good to use of reads are more
+         Single null key allowed
+         Need to synchronize methods if using map in concurrent environment
+         Initial capacity = 16, LF = 0.75. 5 of buckets to be filled to resize and rehash
+         
+      3. LinkedHashMap:
+         Iteration order equals insertion order
+         It maintains a separate doubly linked list to connect entries in insertion order.
+         Can use if order of insertion is to be preserved.
+         Initial capacity = 16
+         
+      4. TreeMap:
+         From SortedMap and NavigableMap.
+         Either key have to be Comparable or pass explicit comparator to TreeMap else ClassCastException comes.
+         Red-black tree implementation
+         Null keys not allowed, but null values ok.
+         
+      5. IdentityHashMap:
+         Uses == comparison.
+         Best to use when key is Class class object or Strings
+         Memory footprint is less as there is not Node or Entry created.
+         Initial capacity = 21
+      
+      6. EnumMap:
+         Key will be enum.
+         Nullkeys not allowed.
+      7. WeakHashMap:
+         GC cleans up the keys unreachable from any other external strong references.
+         Ie; if a key is only present in map and not used outside, it can get cleaned up.
+         Best suited for caches and lookups.
+         Wraps keys in java.lang.ref.WeakReference class.
+         GC sweeps it any time.
+         There is sfot reference which will be GC ed only if high demand for memory comes.
+      8. Collections.synchronizedMap(map):
+         Will give SynchronizedMap object which wraps actual map.
+         Similar to HashTable, all methods will be synchronized
+      9. java.util.cuncurrent.CurrentHashmap:
+            * <b>Concurrency during retrieval.</b>
+            * Extends ConcurrentMap, AbstractMap.
+            * Reads will be concurrent. Not blocked even if writes are going on.
+            * No sync block in get(), but has in put() after getting segment. 
+            * Write needs lock, read will not require a lock. Write locks only segments, not the entire map.
+            * Fail-safe -no ConcurrentModificationException
+            * No null keys or nullvalues supported as .contains() is not effective as in case of other maps here as the values can change in between.
+            * Best use when concurrent writes and there after later, concurrent reads are high.
+            * Operations are not atomic or synchronized.
+            * Even if we use concurrent hash map, there is inconsistencies in result if not carefully synchronized.
+            * Concurrency Level = 16, Default Capacity = 16
+            * More resenbles with HashTable. Even has contains() method equivalent to containsValue(). 
+            * Other maps don't have that. Others has containsKey(), containsValue();
+     10. ConcurrentSkipListMap:
+            * Equivalent of TreeMap with concurrency.
+            * O(logN) guranteed complexity, whereas ConcurrentHashMap not guaranteed that.
+            * From ConcurrentNavigableMap and ConcurrentSortedMap.
+     CopyOnWriteArrayList:
+            * Iteration takes a snapshot and perform it.
+            * Changes to actual list can be done in between the iteration.
+            * It won't give error or it won't add that element to the current iteration snapshot.
+            * Takes and stores a copy of array into snapshot array in Iterator and does reads.
+            * Data inconcistency can be there as the actual inserts takes place to original array.
+            * Atual add() happens by reentrant locking.
+         
+    Note: Concurrent modificationException comes if same or other threads tries to update the map while using it especially in iterator.
+          ArrayList has default capacity of 10.
+          Fail Fast vs Fail Safe:
+          1. Fast: Throws ConcurrentModificationException and fails immediately. Eg: HashMap
+          2. Safe: Allowes modification at the time of access also. No error...but can be unpredicatble. Eg: ConcurrentHashMap
+          <b>Treeify Threshold:</b>
+          The number of elements in a bucket after which the linked list connected to each bucket is converted to tree.Usually 8.
+          <b>Untreeify<b> threshold is the element count in a bin for which tree has to be converted to list. Usually 6.
+          
+          Reentrant Lock:
+            Same thread who aquired locked can proceed. Others has to wait till lock is released. Same as synchronized keyword. 
