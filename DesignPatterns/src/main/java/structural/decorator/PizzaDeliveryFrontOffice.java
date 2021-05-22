@@ -1,4 +1,4 @@
-package structural;
+package structural.decorator;
 
 public class PizzaDeliveryFrontOffice {
     public static void main(String[] args) {
