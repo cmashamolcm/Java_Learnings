@@ -3,7 +3,9 @@
 
 3. When we do
  java classname, below steps takes place
- File
+   
+    
+    File
       |
       Javac
       |
