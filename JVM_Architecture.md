@@ -5,19 +5,19 @@
  java classname, below steps takes place
    
     
-    File
-      |
-      Javac
-      |
-    byte code .class files                          byte code .class files from Java library
-      |                                                       |
-      |                                                       |
-      v                                                       |
-    class loader----------------------------<-----------------|
-      |
-    execution engine
-      |
-      |(JVM interact with OS via native method calls)
+       File
+         |
+         Javac
+         |
+       byte code .class files                          byte code .class files from Java library
+         |                                                        |
+         |                                                        |
+         v                                                        |
+         class loader----------------------------<----------------|
+            |
+            execution engine
+            |
+            |(JVM interact with OS via native method calls)
   Operating system
 4. ### Parts of JVM:
                 * Class Loader SubSystem
