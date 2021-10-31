@@ -18,7 +18,9 @@
             execution engine
             |
             |(JVM interact with OS via native method calls)
+                                                                    
   Operating system
+                                                                    
 4. ### Parts of JVM:
                 * Class Loader SubSystem
                 * Runtime data area (Java stack, heap, PC register, method area, native method stack)
