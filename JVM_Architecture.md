@@ -18,8 +18,7 @@
             execution engine
             |
             |(JVM interact with OS via native method calls)
-                                                                    
-  Operating system
+        Operating system
                                                                     
 4. ### Parts of JVM:
                 * Class Loader SubSystem
