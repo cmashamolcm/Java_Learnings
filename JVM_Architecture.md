@@ -1,5 +1,8 @@
 1. From Java 11, 
    simply with java <class name.java>, we can start JVM.
+   
+   java MainClass.java
+   will work.
 
 3. When we do
  java classname, below steps takes place
