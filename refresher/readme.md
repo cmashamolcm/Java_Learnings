@@ -191,9 +191,9 @@ Eg: When some operation on two numbers from same type results in bigger number w
     To get string x;
     B b = new B();
     b.x; //sould be called.
-    
-
+   
 ```
+    - Private variables of parent will not be visible to child.
 ```
     interface A{default test(){}}
     interface B{default test(){}}
@@ -239,3 +239,131 @@ Eg: When some operation on two numbers from same type results in bigger number w
 27. javap -c <ClassName>
     - To describe a class. 
     - Shows fields, methods, machine level kind of translation of code as well.
+28. equals, toString, hashCode:
+    - methods from Object class
+    - toString() gives `className@hashCodeOfMemoryAddressOfOurObject`
+    - ***When two objects are equal, hashcode should also be same***
+    - ***But when twp objects has same hashcode, it is not mandatory that they are equal.***
+    - In inheritance, equals() contract should not get violated. An instance of parent and child are not equal as class are different.
+    - So, better to check ob.getClass() for equality check.
+29. Wrappers:
+    - Primitive types makes Java not fully(100%) OOO. But 99.9%
+    - Wrappers are object equivalent of primitives.
+    - `Boxing`: Wrap a primitive to its wrapper
+    - `Autoboxing`: 
+    - Automatically perform the boxing or conversion of primitive to wrapper.
+    - Eg: Integer i = 20;
+    - `Auto-unboxing`:
+    - Convert wrapper to primitive automatically.
+    - Eg: int i = new Integer(20);
+30. Abstract keyword:
+    - Abstract methods are to be implemented in child classes.
+    - Abstract methods should be only in interface or `abstract` class.
+    - It is not mandatory that an abstract class need to have abstract methods. But reverse is mandatory.
+    - We cannot instantiate abstract class directly. Need to extend it and implement abstract method and then can instantiate as object of that class.
+    - If child also is abstract, no need to override abstract methods. Those inheriting child can do.
+    - We can create instances of concrete classes.
+31. Inner classes:
+    - `Only inner classes can be static. Outer classes can be final, public, abstract. But not static.`
+    - When we create anonymous classes, it will create .class files as `MyClass$1.class`, `MyClass$2.class`
+    - When we define classes inside a class, .class files will be as `Outer$Inner.class`
+    - We can define anonymous inner class for abstract class.
+32. Interface:
+    - For generalization.
+    - They are abstraction for classes
+    - By default, methods of interface are `public abstract`.
+    - It has `default` methods and `final static` variables from `Java8`
+    - Why variables of interface are 'final and static'?
+    - Interface doesn't have memory. So, to allocate variables, static is the way.
+    - If we allow changing variable, it can create confusions where we use subclasses.
+    - Also, there is default methods which are common to add subclasses but can override.
+    - If not overridden and used fro interface and if that is using these variables, 
+    - it can give different results if variables are not final if we do reassign of variable and execute method after that.
+    - We can have same name variable in child classes.
+    - To access that of interface, we need to use Interface.<variable>
+    - Interfaces can extend multiple interfaces.
+    - Classes can implement multiple interfaces.
+```
+Normal Interface
+Functional Interface: Single Abstract Method(SAM) interface
+Marker Interface: No methods. Eg: serializable.
+                  To inform compiler/ JVM some conditions, this is used. Mostly, for checkings.
+                  Eg: Check for Cloneable to throw CloneNotSupportException while clone() an object.
+                  Nowadays it is not so much in use and annoations are taking the place.
+                  
+  Why we need marker instead of normal interfaces?
+  Consider that we need to delete all objects from database if type is Shape.
+  Next, we need to delete all with type Person.
+  Inead od writing more if else if, better is to have a marker Deletable and extend it by Person and Shape.
+  So, that we can just check if Deletable and remove it.
+  This helps to simplify the code.
+  Markers are helpful for the implementation side to check. Not in users of them.              
+
+```
+33. Enums:
+    - Special type to hold constant type of value.
+    - Each enum extends `java.lang.Enum` class which provides special methods. 
+    - It can hold more data along with constant value
+    - This is actually, `named constants`
+    - Enum has ordinal. Just like array index for each enum constant.
+    - We can compare enums with ==
+    - We cannot extend enum to interface or class
+    - But we can enum can implement interface. Cannot extend class
+34. Annotations:
+    - Its metadata to compiler. Sometimes, to it is metadata to runtime.
+    - Eg: @Override. To compiler. This helps to inform children if parent method signature changes.
+    - Why we need it? To make compiler/ runtime aware of details about our class, methods etc.
+35. Functional Interfaces:
+    - Those interfaces with only one method to implement. Can have additional default methods.
+    - Can use `@FunctionalInterface` annotation so that error can be found at compile time itself if one more abstract method get added.
+    - Instead of anonymous classes, we can create `lambda expressions`. 
+36. Lambda Expressions:
+    - Expression with `->`
+    - This can be used to create implementation of functional interface.
+    - It helps to reduce code
+    - It `works only with functional interfaces` to implement the single method of it.
+    - It makes sure not $1 .class files are created.
+    - But main .class file can be bulky as it will have more details to transform lambda.
+37. Exceptions:
+    - Compile time, runtime, logical errors.
+    - Exceptions are mostly, runtime errors.
+    - Catch with `try-catch` block
+    - Runtime exception/ unchecked exceptions are thrown by JRE and at runtime.
+    - Try catch helps to handle exceptions gracefully. Else, jvm backtracks the method stack to find any handler. 
+    - If nothing is founds, it passes to default exception handler which is part of JVM.
+    - Then terminates the program abnormally. 
+    - Compile time/ checked exceptions are known and must handle by try catch.
+    - We can add multiple catch blocks. Make sure child->parent is the order of catching exception.
+    - This will help catch correct exception in each block. Child exception can be caught by catch block with Parent exception too.
+    - Hierarchy:
+```
+                    Object
+                       |
+                    Throwable
+                    |       |
+              Error        Exception
+         |       |                  |--------------------
+     IOError ThreadDeadh            |                   |
+                                    |                   |
+Errors ar stop the world            |    RuntimeException (unchecked) - |-Arichmetic
+VMErrors                            |                                   |-ArrayIndexOutOfBound
+LinkageErrors                       |                                   |-NullPointer
+(Eg: NoClassDefNotFound )           |-ClassNotFound
+                                    |-SQLException
+                                    |-IOException (all are checked.)
+                                    They will be known and have to handle compulsorily.
+                                    
+```  
+
+- Exception rules:
+    * If parent method has checked exception, child method can have same exception or subtype of it or no exception or runtime exception.
+    * If child throws checked exception, parent should also throw same or parent of that checked exception.
+    * If child throws unchecked exception, parent method may or may not throw it.
+    * These all things helps when we say Parent p = new Child();
+    * When an exception is thrown, with above rule, all checked exceptions are known and unchecked are ok.
+- There are try-catch-finally. `Finally` executes even if exception comes or not.
+- When to choose runtime exception or exception?
+- `Mostly for aspect based exception handling in spring etc, use RuntimeException so that we do not want to bother about exception everytime.`
+- `Throw runtime exception if user can recover from the problem. Eg: /0 can be fixed by adding a valid number.`
+- `Throw compile time exception where developers can handle the error.`
+ 

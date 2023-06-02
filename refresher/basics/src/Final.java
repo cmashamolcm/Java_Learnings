@@ -21,6 +21,8 @@ class AFinal{
 
     int privateVar = 1000;
 
+    private int fromA = 500;
+
     private final void addPrivateFinal(){
 
     }
@@ -41,6 +43,7 @@ class BFinal extends AFinal{
     //final int b = 200;// this makes b from A hidden. Not overridden.
 
     final void addPrivateFinal(){
+        //System.out.println(fromA);// will not be visible as fromA is private
 
     }
 
