@@ -2,6 +2,11 @@ import java.io.IOException;
 import java.net.BindException;
 import java.sql.SQLException;
 
+class CustomException extends Exception{
+    CustomException(){
+        super("Custom exception message");
+    }
+}
 public class Exceptions {
     public static void main(String[] args) {
 try{

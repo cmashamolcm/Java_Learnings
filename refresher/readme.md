@@ -366,4 +366,20 @@ LinkageErrors                       |                                   |-NullPo
 - `Mostly for aspect based exception handling in spring etc, use RuntimeException so that we do not want to bother about exception everytime.`
 - `Throw runtime exception if user can recover from the problem. Eg: /0 can be fixed by adding a valid number.`
 - `Throw compile time exception where developers can handle the error.`
+- `throw` to throw an exception
+- `throws` to indicate that what all exceptions are thrown by a function
+- When an exception happens, if we catch it, remaining flow after finally or catch will not get impacted unless we are rethrowing the exception to change flow.
+- If we are nto handling exception, remaining part of code will not execute as JVM default handler terminates the thread and goes back in call stack.
+- Avoid catching Throwable or Error as it is vast and masks the real problems.
+- try and finally: try throws and finally will execute even if exception comes. But there exception is not handled.
+- try with resource:
+```
+try(autoclosable resource){// here, this resource will be closed if try succeeds or throws exception.
+// same effect as doing it in finally block.
+}catch(){
+}
+
+```
+- Even if we return from try block, finally gets called.
+- Only way to make finally not invoked is `System.exit(0);`
  
