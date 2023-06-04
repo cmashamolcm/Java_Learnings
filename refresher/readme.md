@@ -652,6 +652,9 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
     - `t1.join()`: If we call this in main thread, main has to wait at this line until t1 finishes it's job.
     - `Thread.yield()`: static method. Informs the scheduler that current thread is fine to wait and if you want, please take the processor to allocate to other threads.
     - But decision is fully with discretion of scheduler.
+    - Wait vs Notify:
+      - wait() is part of `Object`
+      - notify()
 43. var:
     - From `Java 10`
     - Local variable with type inference.
