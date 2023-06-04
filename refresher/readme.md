@@ -101,6 +101,7 @@ Eg: When some operation on two numbers from same type results in bigger number w
                             }// multiple cases can be clubbed with ,
                       default->300;// no break; required. ; is enough.
                      ;
+        Note: we can just not return anything also from switch expression.
      ```
       - We have to covert all cases or should have default for switch expression. Else, compile time error comes.
       - May be since it is returning something, it's not good to avoid cases.
@@ -236,6 +237,8 @@ Eg: When some operation on two numbers from same type results in bigger number w
     - Final method will not be overridable.
     - Final classes cannot be extended.
     - `private final` means same meaning individually too. So, one is enough.
+    - `private only` not visible in subclass
+    - `final only` is visible but cannot change in subclass or same class
 27. javap -c <ClassName>
     - To describe a class. 
     - Shows fields, methods, machine level kind of translation of code as well.
@@ -560,6 +563,7 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
           - Best if lot of writes and reads are there from a map
           - If we use Atomic values, adds up to thread safety.
           - We can add to constructor, concurrency level. If that is less that initial capacity, initial capacity is reset to concurrency level so that only that much buckets can be created and used.
+          - **Major change in maps happened with TREEIFY etc in Java8. ConcurrentHashMap got rewritten to avoid lock variables and use intrinsic lock (synchronize over bucket) instead. **
           - No null key. No null value.
       ```
           Why we need Collection.synchronizedCollection() and Collection.synchronizedSet()?
@@ -599,4 +603,79 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
       - Note that `wrapping with Collections.synchronizedCollection() will not protect iterator methods. It will remain still fail-fast. So, we have to add synchronized for the iteration block explicitly.`
 40. How is this `new ArrayList<>(another collection) or new LinkedList<>(any collection)` works?
     `Every collection has .toArray() method. So, whichever be the collection type, we get an array and then iterate and create/ add to the relevent collection.`
-41. 
+41. Stream API:
+    - Apply manipulation on top of a flow of data
+    - Reduces code.
+    - Uses functional interfaces
+    - Steam.forEach and List.forEach are different. List.forEach depends on iterator. Stream is not.
+    - Stream activates only when a terminal operation is met. till then, there is no need to create stream from data itself.
+    - `groupBy` helps to construct map with key and list of values from stream
+    - groupBy(key mapper = what is key, value mapper = datatype to which values are to be added (TreeSet), downstream = collectors to apply logics to build value collection. Eg: another groupBy or Collectors.maxBy);
+    - groupByConcurrent returns ConcurrentHashMap or its subtypes
+    - `toMap(keyMapper, valueMapper)` helps to build a map with single values. It fails if duplicates in list and no merge function given. 
+    - `map vs flatMap()`:
+    - Both returns stream
+    - But flatMap accepts a mapper that must return a `Stream`
+    - flatMap applies transformation on each element of incoming stream and generates a stream from each of them.
+    - Then combines these all streams to produce one single stream one level down.
+    - Eg: Use map to get stream of List of orders from product.
+    - Eg: Use flatMap to get stream of orders from product each has list of orders.
+42. Threads:
+    - Split tasks into small chunks and run in parallel
+    - Threads are light weight processes
+    - It helps to utilize the cpu cores effectively and finish task faster
+    - OS has thread schedulers which takes each job as cpu cores are available.
+    - We just have to submit our tasks to scheduler.
+    - 2 ways to create thread
+      - extend Thread class. This internally extends Runnable.
+      - implement Runnable(`@FunctionalInterface`) interface
+    - `thread.start()` calls run() method. It adds job to scheduler. Not immediately starting run method.
+    - There are thread priorities we can set. But it just suggests thread scheduler to take it first. But its discretion of scheduler to select it.
+    - Default priority = normal(5). max=10. min=1
+    - To make a sleep wait holding lock, `Thread.sleep(ms)`. This throws `InterruptedExcepton`.
+    - States:
+      ```
+      new (Thread t1 = new Thread())
+            |
+            |
+      -------- Runnable (t1.start(). Assigned to scheduler)---<------^
+      |        |                                                     |thread.notify()
+      |        |                                     sleep/wait      |
+      |     Running (scheduler took it from queue)---------------->-Waiting
+      |        |
+      |        |
+      |        |thread.stop(). Never use it.
+      |--------|-----------------Dead
+      Can be due once execution finished
+        
+      ```
+    - `t1.join()`: If we call this in main thread, main has to wait at this line until t1 finishes it's job.
+    - `Thread.yield()`: static method. Informs the scheduler that current thread is fine to wait and if you want, please take the processor to allocate to other threads.
+    - But decision is fully with discretion of scheduler.
+43. var:
+    - From `Java 10`
+    - Local variable with type inference.
+    - We can declare variables `inside method` with var. Not in class etc. 
+    - Reason is, local varaibles has life inside a method and type will b eknown anyways. So, we can infer there.
+    - So, var is also ok.
+    - Once inferred, we cannot assign `other types`. Same type ok.
+    - We cannot declare. But should be initialized. `var a; not ok`
+    - `var a =10; is ok`
+    - `var a = 10; a = "hai"; not ok` 
+44. Java 17:
+    - Sealed classes:
+        - If a class is sealed, we have to specify permits. (which all classes can inherit from it)
+        - Child classes must be `sealed, non-seeled or final`
+        - non-sealed: anyone can inherit from this child
+        - final: no one can inherit from this child
+        - sealed: restricted inheritance 
+    - Record:
+      - To reduce data class(models) size. 
+      - Came in `Java 17`
+      - By default canonical constructor with all parameters we gave will be there.
+      - If another constructor is needed, can add explicitly. But should call canonical one.
+      - Refer `Record.java` in `basics`
+      - equals, toString are overridden. Static variables can be explicitly added. But cannot add non-static.
+      - To add no-static variables, update the canonical constructor.
+      - This will be `immutable`. Not setter. Getters with same name of parameters
+      - Best suitable for immutable models used to send data from REST endpoint etc.

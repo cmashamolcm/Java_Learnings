@@ -4,12 +4,20 @@ public class Inheritance {
     }
 
     class A{
+        final int x = 10;
+        private int y = 20;
         public void add(){
 
         }
     }
 
     class B extends A{
+        public void subtract(){
+            System.out.println(x);
+            //x = 200;// not allowed to change final.
+            //y  = 20;// y not visible
+
+        }
 
     }
 
