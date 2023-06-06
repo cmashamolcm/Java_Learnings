@@ -626,22 +626,24 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
     - It helps to utilize the cpu cores effectively and finish task faster
     - OS has thread schedulers which takes each job as cpu cores are available.
     - We just have to submit our tasks to scheduler.
+    - Thread vs process: Threads are within a process and they share memory, code etc. So, light weight and easy to switch between as compared to processes
     - 2 ways to create thread
       - extend Thread class. This internally extends Runnable.
-      - implement Runnable(`@FunctionalInterface`) interface
+      - implement Runnable(`@FunctionalInterface`) interface. Use it if our Thread class need to extend other classes and interfaces. If used Thread, no more extension of class.
     - `thread.start()` calls run() method. It adds job to scheduler. Not immediately starting run method.
     - There are thread priorities we can set. But it just suggests thread scheduler to take it first. But its discretion of scheduler to select it.
-    - Default priority = normal(5). max=10. min=1
+    - Default priority = `normal(5)`. max=10. min=1
+    - We can make a thread daemon by `setDaemon(true)`. So, JVM will not wait until this thread finishes to terminate application.
     - To make a sleep wait holding lock, `Thread.sleep(ms)`. This throws `InterruptedExcepton`.
     - States:
       ```
       new (Thread t1 = new Thread())
             |
             |
-      -------- Runnable (t1.start(). Assigned to scheduler)---<------^
-      |        |                                                     |thread.notify()
-      |        |                                     sleep/wait      |
-      |     Running (scheduler took it from queue)---------------->-Waiting
+      -------- Runnable (t1.start(). Assigned to scheduler)---<------^-----------------<-^BLOCKING STATE(waiting for lock. In sleep, lock is already there.)
+      |        |                                                     |if sleep           | thread.notify()
+      |        |                                     sleep/wait      |                   |if was waiting
+      |     Running (scheduler took it from queue)---------------->-Waiting---------------
       |        |
       |        |
       |        |thread.stop(). Never use it.
@@ -655,6 +657,84 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
     - Wait vs Notify:
       - wait() is part of `Object`
       - notify()
+    - Synchronization:
+      - Manage multiple threads when they share resources/ critical region so that at a time one thread alter it.
+      ```
+        Assume common shynchornized resource as a locked room shared by multiple threads(persons).
+        The room is guarded by a security called JVM. This security holds the lock key to the room.
+        When a person want to enter the room, security gives the lock to that person if no body else taken the key.
+        The person with key can enter the room and use it.
+        When he comes back, security graps the lock back.
+        When a person comes at the time another person using the room, security asks him to wait until the current user gives him back the lock.
+        So, security asks the other person to wait. 
+        When multiple people are coming for the same room, security JVM checks their priority. (Eg: booking time based priority)
+        When current user in room comes back and handover lock, security gives it to most eligible next person.
+      
+        Any object can be used as a lock.
+        We can use `this` as lock to avoid creating one more object as lock.
+        Then, all synchronized methods locked with `this` will be blocked.
+      
+        When we add synchronized keyword on a non-static method, the lock is `this`.
+        If two non-static methods are synchronized in the same class, 
+        thread t1 enters method1. Then lock is taken. So, if t1 need to access method2, still it has to wait.
+        This is like `we gave lock of entire hotel to every thread. Here, unsynchornized methods will be still accessible.`
+      
+        If the lock is this keyword in synchronized block in one methods and 2 other methods are synchronized non-static,
+        then, if one thread enters any of them/ block, others have to wait.
+      
+        When we have synchronized static methods, lock is on `class object`.
+        Threads should wait in all other synchronized static methods of same class till one thread releases it.
+        Non-synchronized methods are always open.
+      
+        Same thread having lock can use any synchronized block locked with same lock object.
+      
+        Wait and Nofify:
+        When someone enters the room, due to manay reasons, they have to wait inside the room.
+        Eg: The main intesion of the person entered the room was to start a tv inside it. 
+        But if power supply is not there, he has to wait till someone fixes and notifies him about if electrition completed his duty.
+        In real case, the person informs security to call electrition and he will wait outside. Security hands over lock to electrition and fixes the problem.
+        Once the issue is fixed, electrition gives the key back to security.
+        When there is no electricity, the persons waits and security asks the electrition to enter the room and fix the issue.
+        Once electrition gives key back to security, he can ask previous person or anyone waiting to use the room by handing over lock.
+      
+        This is same as thread t1 entered the synchronized(lock) block and has to wait . 
+        This wait() call on lock object, makes t1 wait and release the lock. Then , t1 can resume its task only after wait time is over or any other thread aquired lock (here, electrition) nofities him to resume.
+        Usually, the other threads handover the lock to security (JVM) and if notify(), one of the persons waiting will get the lock. If the person went earlier is lucky enough, he will get it.
+        Security can inform all waiting people also. This is `notifyAll()` and the crowed flights for the lock and wheoever wins gets the lock.
+        We can set prorities to each thread to let security (JVM) give him precendence. But it is strictly the discretion of security on to whom to handover the lock.
+        
+        Summary:
+        synchronized(lock) and lock can be any object. It can be this, class or any object which is not NULL.
+        Inside synchronized block, if the thread need to wait, call lock.wait().(fails if caller thread not owns the lock. That is why wait() is called on lock inside synchronized(lock) so that we can be sure that the current thread owns `lock`.)
+        To inform waiting threads to bid for the room, notify() or notifyAll() is used.
+        
+      ```
+      - `volatile`:
+      - Usually each thread running on each core will have a cache in core to keep a copy of the shared resource from RAM
+      - so that it will be faster to access from cache than go to RAM everytime.
+      - This cache will be frequently updated as well with respect to RAM. But consistency make get compromised.
+      - To avoid that volatile helps.
+      - If we mark a variable as volatile, instead of keeping a copy in cache, all threads will read and write it from RAM.
+      - This makes sure that the shared resource is consistent to all threads.
+      - `Deadlock`:
+      - t1 got lock l1 and need lock l2. So, it is waiting for l2.
+      - t2 got lock l2 and it need lock l1 as well. So, waiting for l1.
+      - t1 and t2 are mutually locked and cannot proceed for infinite time.
+      - Lock order l1, l2 and l2, l1 created issue here.
+      - Refer `DeadLock.java`
+      - `Wait` vs `Sleep`:
+      - wait releases lock and thread goes to runnable state. Other threads can fight for lock by that time.
+      - wait is from java.lang.Object
+      - wait throws IllegalMonitorStateException if we try to call wait on an object which is not a lock used in relevant synchronized block.
+      - sleep does not release lock. Once time is over, it comes back and resumes the work.
+      - sleep is from java.lang.Thread
+      - Makes current thread sleep for given time.
+      - Can interrupt with t.interrupt() and it throws InterruptedException.
+      - `Notify` vs `NofifyAll`:
+      - notify() informs any one of the waiting threads for lock. That thread goes to blocking state.
+      - notifyAll() informs all threads and they all fight and one succeeds. All threads comes to blocking state and once succeeds.
+      - BLOCKING STATE: a thread is waiting to get lock.
+      - https://www.youtube.com/watch?v=WldMTtUWqTg
 43. var:
     - From `Java 10`
     - Local variable with type inference.
