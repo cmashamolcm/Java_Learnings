@@ -620,6 +620,29 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
     - Then combines these all streams to produce one single stream one level down.
     - Eg: Use map to get stream of List of orders from product.
     - Eg: Use flatMap to get stream of orders from product each has list of orders.
+    - `Parallel Streams:`
+      - Underlying is `fork-join thread pool (Java 7)`
+      - fork-join is very light weight as it does not have own stacks like thread.
+      - Fork-Join-Pool is on top of ExecutorService and each thread will have dedicated circular dequeue of tasks.
+      - Once the dequeue is empty, it consumes from dequeues of other threads. (`work stealing`)
+      - On stealing work, it is from queue tail. Regular work pull is done from head.
+      - The worker threads uses queue head and those allocating tasks uses tail. So, no wait complexity for threads.
+      - With this concept, fight for resource between thread is reduced and hence is faster.
+      - Fork - splits the task. Join combines the result.
+      - `Use parallel stream when our data source can be evenly splitted.`
+      - Using spliterators
+      - Keeps the order as same as that of source. If source is order respected (linkedlist), result from parallel stream also will be.
+      - If source is unordered, result will also be unordered.
+      - But we can control final result order by sort, etc.
+      - In such cases, parallel stream will be operation heavy.
+      - Parallel stream with sort() or forEachOrdered() will be slower than without sort() or forEach().
+      - https://www.youtube.com/watch?v=0906Imq_z8g
+      - https://www.baeldung.com/java-fork-join
+      - `Locks`:
+      - Why cannot we use just synchronized blocks and no locks?
+      - `synchronized is on top of an object. But we cannot provide a fairness condition on which threads can give priority. Reentrant locks are same as intrinsic locks with synchronized() but can provide fairness, tryLock etc.`
+      - `This adds up to more flexibility.`
+      - `Synchronized blocks are intrinsic locks.`
 42. Threads:
     - Split tasks into small chunks and run in parallel
     - Threads are light weight processes
@@ -707,6 +730,9 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
         synchronized(lock) and lock can be any object. It can be this, class or any object which is not NULL.
         Inside synchronized block, if the thread need to wait, call lock.wait().(fails if caller thread not owns the lock. That is why wait() is called on lock inside synchronized(lock) so that we can be sure that the current thread owns `lock`.)
         To inform waiting threads to bid for the room, notify() or notifyAll() is used.
+      
+        Note: sleep(ms) or wait(ms) does not guarentee that thread restarts in given ms.
+        Within this minimum time, thread wakes up and waited one goes to BLOCKING state(fight for lock) and then to runnable. Sleeped one has lock. So, it goes straight to Runnable state.
         
       ```
       - `volatile`:
