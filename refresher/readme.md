@@ -769,7 +769,7 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
     - From `Java 10`
     - Local variable with type inference.
     - We can declare variables `inside method` with var. Not in class etc. 
-    - Reason is, local varaibles has life inside a method and type will b eknown anyways. So, we can infer there.
+    - Reason is, local variables has life inside a method and type will b eknown anyways. So, we can infer there.
     - So, var is also ok.
     - Once inferred, we cannot assign `other types`. Same type ok.
     - We cannot declare. But should be initialized. `var a; not ok`
@@ -778,7 +778,7 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
 44. Java 17:
     - Sealed classes:
         - If a class is sealed, we have to specify permits. (which all classes can inherit from it)
-        - Child classes must be `sealed, non-seeled or final`
+        - Child classes must be `sealed, non-sealed or final`
         - non-sealed: anyone can inherit from this child
         - final: no one can inherit from this child
         - sealed: restricted inheritance 
