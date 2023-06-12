@@ -510,7 +510,10 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
         5. HashMap has Node[] array with size n =16(capacity) initially.
         5. PUT(key, value)
             * key.hashCode%(n-1) or some logic so that we can get index between 0 to capacity where n is the no: of buckets
-            * resize() happens in beginning of put call if required. (THRESHOLD met). This will make sure tree convered to List if no: nodes in a bucket is < UNTREEIFY_THRESHOD(6)
+            * resize() happens in beginning of put call if first time insert. 
+            * Else everytime resize happens at the end of put call if required. (condition: Total size(no: of items) > (THRESHOLD=capacity*loadFactor) met). 
+            * In putVal(), if the hash collision occurs and exisiting key is not matching the new key, this entry is added to next of existing node to form a linked list of nodes in same hash bucket.
+            * In putVal() itself, it will make sure tree convered to List if no: nodes in a bucket is < UNTREEIFY_THRESHOD(6)
             * If bucket has no nodes, add this new node. (Node(key, value, hashcode, pointer to next node))
             * If bucket has an entry, check if hashcode is same, if so, check if key is equal. If so, replace value in that node
             * If bucket has more entries than the TREEIFY_THRESHOD(8 by default), convert list of nodes in bucket to red-black tree and add new entry also into it.
