@@ -385,197 +385,197 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
 ```
 - Even if we return from try block, finally gets called.
 - Only way to make finally not invoked is `System.exit(0);`
-  38. Collection Framework:(12 ownwards)(Generics came in 1.5)
-      - group of elements with no size to specify before hand 
-      - Datastructures have difference on how to traverse, store, delete etc.
-      - Depending on the needs of performance, we can decide which one to use.
-      - From `java.util` package
-      - Base class is `Collection` and that comes from `java.lang.Iterable`
-      - Works with reference type instead of primitives. To use primitives, we can use wrappers.
-      - The reason is, collection is playing with `Object`.
-      - Generics helps us to decide `the type at compile time itself`.
-      - Diamonds of generics came form 1.7
-      - List: (ArrayList), LinkedList - preserves insert order), Vector(similar to ArrayList. But synchronized):
-          - internally array
-          - This is similar to array but without fixed length.
-      - Set: (HashSet, LinkedHashSet, TreeSet(sorted))
-          - Collection of unique values and no duplicates
-      - Queue: (FIFO) (PriorityQueue, Dequeue)
-      - Map: (HashMap, TreeMap, LinkedHashMap):
-          - Key value pair
-          - Not implementing 'Collection'. But from `java.util.Map`
-          - Key is collection of set and value is list of values.
-          - Keys are not duplicated.
-          - HashTable is synchronized
-      - Details:
-      - ArrayList:
-        - It derives from 'RandomAccess' and hence index based access is possible.
-        - (index based. Default capacity 10.
-        - Increase by 50% of previous on each 
-        - ArrayList internally calls `ArraySupport.newLength()` to find next length for new array within integer limit.
-        - If more than integer limit comes, it throws OutOfMemory. Even if the size is within the limit, if JVM heap is full, still OutOfMemory can come.
-        - On remove(), size is reduced by 1 and shifts elements to left.)
-        - We can set initial capacity
-        - There is `no concept of loadFactor` for lists as the backing array just holds one element per index.
-        - But `loadFactor is there in Maps` because, there, one index points n elements with same hash for key.
-        - Fail-fast iterator
-        - Use `Collections.synchronizedCollection(list)` to make it thread safe. but will be slow due to synchronized methods.
-        - null ok
-        - Order preserved. But we can add in given index with a right shift. (1, 2, 3), add(1, 200)->1, 200, 3, 4
-      - CopyOnWriteArrayList:
-        - thread-safe variant of arraylist
-        - fail-safe
-        - Better when `reads are more and updates are less`. All writes are on snapshots. So, more memory use.
-        - Take snapshot. Update it and rewrite back to original backed array inside `synchronized block` on add, remove, set.
-        - Reads are not in synchronized block or snapshot. So, ok.
-        - Iterator method remove() is unsupported. May be since it is direct update possible. So, no need of this method.
-        - null ok
-        - Order preserved
-      ```
-      - add(element) : O(1)
-      - add(index, element): O(n)
-      - get(index): O(1)
-      - remove(): O(n). Iterates to find element
-      - indexOf(), caonatins(): O(n)
-      - null value ok  
+38. Collection Framework:(12 ownwards)(Generics came in 1.5)
+    - group of elements with no size to specify before hand 
+    - Datastructures have difference on how to traverse, store, delete etc.
+    - Depending on the needs of performance, we can decide which one to use.
+    - From `java.util` package
+    - Base class is `Collection` and that comes from `java.lang.Iterable`
+    - Works with reference type instead of primitives. To use primitives, we can use wrappers.
+    - The reason is, collection is playing with `Object`.
+    - Generics helps us to decide `the type at compile time itself`.
+    - Diamonds of generics came form 1.7
+    - List: (ArrayList), LinkedList - preserves insert order), Vector(similar to ArrayList. But synchronized):
+        - internally array
+        - This is similar to array but without fixed length.
+    - Set: (HashSet, LinkedHashSet, TreeSet(sorted))
+        - Collection of unique values and no duplicates
+    - Queue: (FIFO) (PriorityQueue, Dequeue)
+    - Map: (HashMap, TreeMap, LinkedHashMap):
+        - Key value pair
+        - Not implementing 'Collection'. But from `java.util.Map`
+        - Key is collection of set and value is list of values.
+        - Keys are not duplicated.
+        - HashTable is synchronized
+    - Details:
+    - ArrayList:
+      - It derives from 'RandomAccess' and hence index based access is possible.
+      - (index based. Default capacity 10.
+      - Increase by 50% of previous on each 
+      - ArrayList internally calls `ArraySupport.newLength()` to find next length for new array within integer limit.
+      - If more than integer limit comes, it throws OutOfMemory. Even if the size is within the limit, if JVM heap is full, still OutOfMemory can come.
+      - On remove(), size is reduced by 1 and shifts elements to left.)
+      - We can set initial capacity
+      - There is `no concept of loadFactor` for lists as the backing array just holds one element per index.
+      - But `loadFactor is there in Maps` because, there, one index points n elements with same hash for key.
+      - Fail-fast iterator
+      - Use `Collections.synchronizedCollection(list)` to make it thread safe. but will be slow due to synchronized methods.
+      - null ok
+      - Order preserved. But we can add in given index with a right shift. (1, 2, 3), add(1, 200)->1, 200, 3, 4
+    - CopyOnWriteArrayList:
+      - thread-safe variant of arraylist
+      - fail-safe
+      - Better when `reads are more and updates are less`. All writes are on snapshots. So, more memory use.
+      - Take snapshot. Update it and rewrite back to original backed array inside `synchronized block` on add, remove, set.
+      - Reads are not in synchronized block or snapshot. So, ok.
+      - Iterator method remove() is unsupported. May be since it is direct update possible. So, no need of this method.
+      - null ok
+      - Order preserved
+    ```
+    - add(element) : O(1)
+    - add(index, element): O(n)
+    - get(index): O(1)
+    - remove(): O(n). Iterates to find element
+    - indexOf(), caonatins(): O(n)
+    - null value ok  
 
-      ```
-      - LinkedList:
-        - Dynamic and creates and links objects (nodes)
-        - Underlying is double linked list as node has previous and next
-        - Dynamic size.
-        - O(1) insert() and delete() from ends
-        - Performance overhead on access individual objects. Traversal/ get(index) O(n)
-        - takes more memory to store the pointers to next, previous elements
+    ```
+    - LinkedList:
+      - Dynamic and creates and links objects (nodes)
+      - Underlying is double linked list as node has previous and next
+      - Dynamic size.
+      - O(1) insert() and delete() from ends
+      - Performance overhead on access individual objects. Traversal/ get(index) O(n)
+      - takes more memory to store the pointers to next, previous elements
+      - null ok
+      - Order preserved
+      - Vector:
+        - Legacy data structure
+        - But now fully compatible to collections.
+        - Synchronized list (similar to arraylist but synchronized)
+        - Slow
+        - Fail-fast iterator
+        - Thread-safe
+        - Capacity doubled on demand. Not 50% like arraylist
         - null ok
-        - Order preserved
-        - Vector:
-          - Legacy data structure
-          - But now fully compatible to collections.
-          - Synchronized list (similar to arraylist but synchronized)
-          - Slow
-          - Fail-fast iterator
-          - Thread-safe
-          - Capacity doubled on demand. Not 50% like arraylist
-          - null ok
-        - HashSet:
-          - Backed by HashMap with default capacity 16 and loadFactor 0.75
-          - It has loadFactor
-          - Each add() comes as key to hashmap and value will be constant `new Object()`.
-          - Not order preserved
-          - No duplicates
-          - Not synchronized
-          - Fail-fast
-          - null ok
-        - LinkedHashSet:
-          - Order of insertion preserved
-          - Backed by LinkedHashMap
-          - Fail-fast
-          - null ok
-        - TreeSet:
-          - Sorted by default
-          - Backed by TreeMap.
-          - Derived from SortedSet
-          - Not preserving insertion order
-          - Elements should be Comparable or pass Comparator on create.
-          - Red-Black tree. So, O(logN) for all operations
-          - Fail-fast
-          - Use Collections.SynchronizedSortedSet to make it thread-safe.
-          - null not supported. (help sorting)
-        - HashTable:
-          - Synchronized map. Thread-safe
-          - Each operation is synchronized
-          - So, slow
-          - Fail-safe
-          - Null key or value not supported.
-        - HashMap:
-          - Key value pair
-          - Relies on equals() and hashCode() contract
-          - Fail-fast
-          - Not synchronized
-          - Order not preserved
-          - Fast O(1) insert/ retrieve
-          - Duplicate values ok. No duplicate keys.
-          - Has capacity 16 and load factor 0.75 by default.
-          - Capacity increase by 2^n and hence doubles everytime than previous value on reaching threshold
-          - No shrink on remove() as most of the time, when removes, there will be something to add.
-          - Better idea is to reinitialize the map when size() become 0 manually to make large space garbage collected.
-          - null ok as key and value
-      ```
-      HashMap Internals:
-          1. Based on hashing
-          2. If two objects are equal, it should have same hashcode.
-          3. public int hashCode()
-          4. public boolean equals(object) 
-          5. HashMap has Node[] array with size n =16(capacity) initially.
-          5. PUT(key, value)
-              * key.hashCode%(n-1) or some logic so that we can get index between 0 to capacity where n is the no: of buckets
-              * resize() happens in beginning of put call if required. (THRESHOLD met). This will make sure tree convered to List if no: nodes in a bucket is < UNTREEIFY_THRESHOD(6)
-              * If bucket has no nodes, add this new node. (Node(key, value, hashcode, pointer to next node))
-              * If bucket has an entry, check if hashcode is same, if so, check if key is equal. If so, replace value in that node
-              * If bucket has more entries than the TREEIFY_THRESHOD(8 by default), convert list of nodes in bucket to red-black tree and add new entry also into it.
-              * Hash collision: Found a bucket with already Node
-              * Rehashing: On meeting threshold capacity, no: of buckets changed and rearrages nodes by hashing to align each key-value to suitable buckets. 
-          6. GET(key):
-              * Find hash of key
-              * Indentify the bucket
-              * Always check first node if has same hashcode and same key
-              * If fist node does not match and node is TreeNode, find node from Red-Black tree (logN)
-              * If normal linked list of nodes im bucket, travese and get value by comparing hashcode, key with equals.
-          7. REMOVE(key):
-              * This will not shrik the map bucket size. But can rearrange the node tree to linked list if untreeify threshold is met.
-              * No resize/ re-hashing on remove.
+      - HashSet:
+        - Backed by HashMap with default capacity 16 and loadFactor 0.75
+        - It has loadFactor
+        - Each add() comes as key to hashmap and value will be constant `new Object()`.
+        - Not order preserved
+        - No duplicates
+        - Not synchronized
+        - Fail-fast
+        - null ok
+      - LinkedHashSet:
+        - Order of insertion preserved
+        - Backed by LinkedHashMap
+        - Fail-fast
+        - null ok
+      - TreeSet:
+        - Sorted by default
+        - Backed by TreeMap.
+        - Derived from SortedSet
+        - Not preserving insertion order
+        - Elements should be Comparable or pass Comparator on create.
+        - Red-Black tree. So, O(logN) for all operations
+        - Fail-fast
+        - Use Collections.SynchronizedSortedSet to make it thread-safe.
+        - null not supported. (help sorting)
+      - HashTable:
+        - Synchronized map. Thread-safe
+        - Each operation is synchronized
+        - So, slow
+        - Fail-safe
+        - Null key or value not supported.
+      - HashMap:
+        - Key value pair
+        - Relies on equals() and hashCode() contract
+        - Fail-fast
+        - Not synchronized
+        - Order not preserved
+        - Fast O(1) insert/ retrieve
+        - Duplicate values ok. No duplicate keys.
+        - Has capacity 16 and load factor 0.75 by default.
+        - Capacity increase by 2^n and hence doubles everytime than previous value on reaching threshold
+        - No shrink on remove() as most of the time, when removes, there will be something to add.
+        - Better idea is to reinitialize the map when size() become 0 manually to make large space garbage collected.
+        - null ok as key and value
+    ```
+    HashMap Internals:
+        1. Based on hashing
+        2. If two objects are equal, it should have same hashcode.
+        3. public int hashCode()
+        4. public boolean equals(object) 
+        5. HashMap has Node[] array with size n =16(capacity) initially.
+        5. PUT(key, value)
+            * key.hashCode%(n-1) or some logic so that we can get index between 0 to capacity where n is the no: of buckets
+            * resize() happens in beginning of put call if required. (THRESHOLD met). This will make sure tree convered to List if no: nodes in a bucket is < UNTREEIFY_THRESHOD(6)
+            * If bucket has no nodes, add this new node. (Node(key, value, hashcode, pointer to next node))
+            * If bucket has an entry, check if hashcode is same, if so, check if key is equal. If so, replace value in that node
+            * If bucket has more entries than the TREEIFY_THRESHOD(8 by default), convert list of nodes in bucket to red-black tree and add new entry also into it.
+            * Hash collision: Found a bucket with already Node
+            * Rehashing: On meeting threshold capacity, no: of buckets changed and rearrages nodes by hashing to align each key-value to suitable buckets. 
+        6. GET(key):
+            * Find hash of key
+            * Indentify the bucket
+            * Always check first node if has same hashcode and same key
+            * If fist node does not match and node is TreeNode, find node from Red-Black tree (logN)
+            * If normal linked list of nodes im bucket, travese and get value by comparing hashcode, key with equals.
+        7. REMOVE(key):
+            * This will not shrik the map bucket size. But can rearrange the node tree to linked list if untreeify threshold is met.
+            * No resize/ re-hashing on remove.
               
 
-      ```
-        - LinkedHashMap:
-          - Same as hashmap. But an additional feature to keep the insertion order is there.
-          - Not synchronized
-          - Fail-fast
-          - Wrap with Collection.synchronizedMap() to make it thread safe for methods. But not iterator.
-          - We can decide with order parameter to constructor with load factor and capacity if insertion order(order=false. Default) or access order(order=true) is to be preserved.
-          - For access order, if we updated a value to key, then order will be changed to give that as last one.
-          - Underlying is HashMap. But has head and tail to create dequeue of  LinkedHashMap.Entry which has key, value, hash, after and before. 
-          - LinkedHashMap.Entry is subclass of Map.Node + after and before pointers.
-          - This controls the order.
-          - After every update or access or remove, this dequeue will get updated to maintain the order.
-          - But there is an additional method afterNodeUpdate(), afterNodeAccess(), afterNodeRemove() which will be 
-          - Null key and values ok
-        - TreeMap:
-          - Ordered map
-          - Key should be comparable or treemap is created with comparator for key.
-          - Not synchronized. Use Collections.synchronizedSortedMap().
-          - Fail-fast
-          - Internally Red-Black tree
-          - O(logN)
-          - No null key. But null values ok
-          - Performance is better. But insertion may be costly(logN) compared to HashMap due to the internal sorting.
-        -ConcurrentHashMap:
-          - java.util.concurrent
-          - From 1.5 onwards
-          - Thread-safe with locking. Not synchronized. But with segment locking or bucket locking.
-          - Fail-safe as iteration works on snapshots
-          - Best for concurrent thread access
-          - Initial capacity 16, load factor 0.75f
-          - `No lock for reads. But applies lock/ synchronization on each bucket on write.
-          - 16 updates possible at a time with basic bucket count. Any number of reads are also fine.
-          - Reads will return the value only if write happened before for that key.
-          - Best if lot of writes and reads are there from a map
-          - If we use Atomic values, adds up to thread safety.
-          - We can add to constructor, concurrency level. If that is less that initial capacity, initial capacity is reset to concurrency level so that only that much buckets can be created and used.
-          - **Major change in maps happened with TREEIFY etc in Java8. ConcurrentHashMap got rewritten to avoid lock variables and use intrinsic lock (synchronize over bucket) instead. **
-          - No null key. No null value.
-      ```
-          Why we need Collection.synchronizedCollection() and Collection.synchronizedSet()?
-          Collection.synchronizedCollection() will have common methods of collection only.
-          If any set specific methods we need to synchronize, better to go with Collection.synchronizedSet()
+    ```
+      - LinkedHashMap:
+        - Same as hashmap. But an additional feature to keep the insertion order is there.
+        - Not synchronized
+        - Fail-fast
+        - Wrap with Collection.synchronizedMap() to make it thread safe for methods. But not iterator.
+        - We can decide with order parameter to constructor with load factor and capacity if insertion order(order=false. Default) or access order(order=true) is to be preserved.
+        - For access order, if we updated a value to key, then order will be changed to give that as last one.
+        - Underlying is HashMap. But has head and tail to create dequeue of  LinkedHashMap.Entry which has key, value, hash, after and before. 
+        - LinkedHashMap.Entry is subclass of Map.Node + after and before pointers.
+        - This controls the order.
+        - After every update or access or remove, this dequeue will get updated to maintain the order.
+        - But there is an additional method afterNodeUpdate(), afterNodeAccess(), afterNodeRemove() which will be 
+        - Null key and values ok
+      - TreeMap:
+        - Ordered map
+        - Key should be comparable or treemap is created with comparator for key.
+        - Not synchronized. Use Collections.synchronizedSortedMap().
+        - Fail-fast
+        - Internally Red-Black tree
+        - O(logN)
+        - No null key. But null values ok
+        - Performance is better. But insertion may be costly(logN) compared to HashMap due to the internal sorting.
+      -ConcurrentHashMap:
+        - java.util.concurrent
+        - From 1.5 onwards
+        - Thread-safe with locking. Not synchronized. But with segment locking or bucket locking.
+        - Fail-safe as iteration works on snapshots
+        - Best for concurrent thread access
+        - Initial capacity 16, load factor 0.75f
+        - `No lock for reads. But applies lock/ synchronization on each bucket on write.
+        - 16 updates possible at a time with basic bucket count. Any number of reads are also fine.
+        - Reads will return the value only if write happened before for that key.
+        - Best if lot of writes and reads are there from a map
+        - If we use Atomic values, adds up to thread safety.
+        - We can add to constructor, concurrency level. If that is less that initial capacity, initial capacity is reset to concurrency level so that only that much buckets can be created and used.
+        - **Major change in maps happened with TREEIFY etc in Java8. ConcurrentHashMap got rewritten to avoid lock variables and use intrinsic lock (synchronize over bucket) instead. **
+        - No null key. No null value.
+    ```
+        Why we need Collection.synchronizedCollection() and Collection.synchronizedSet()?
+        Collection.synchronizedCollection() will have common methods of collection only.
+        If any set specific methods we need to synchronize, better to go with Collection.synchronizedSet()
 
-      ```
-        - Collections class has many utility methods for collections like sort().
-        - We can sort collections with type `java.lang.Comparable`. or explicitly we have to specify a comparator(`java.util.Comparator`).
-        - Else error comes as `ClassCastException`.
-        - Comparable has `comparaTo(obj2)`. Comparator has `compare(obj1, obj2)`;
-        - sort is using `mergeSort` internally with `O(NlogN)`.
+    ```
+      - Collections class has many utility methods for collections like sort().
+      - We can sort collections with type `java.lang.Comparable`. or explicitly we have to specify a comparator(`java.util.Comparator`).
+      - Else error comes as `ClassCastException`.
+      - Comparable has `comparaTo(obj2)`. Comparator has `compare(obj1, obj2)`;
+      - sort is using `mergeSort` internally with `O(NlogN)`.
 39. Fall-fast vs Fail-safe Iterators:
     - Fail-fast:
     - Throws ConcurrentModificationException if we change underlying collection while iterating with iterator.hasNext().
