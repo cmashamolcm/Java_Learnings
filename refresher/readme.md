@@ -385,7 +385,7 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
 ```
 - Even if we return from try block, finally gets called.
 - Only way to make finally not invoked is `System.exit(0);`
-38. Collection Framework:(12 ownwards)(Generics came in 1.5)
+38. Collection Framework:(1.2 ownwards)(Generics came in 1.5)
     - group of elements with no size to specify before hand 
     - Datastructures have difference on how to traverse, store, delete etc.
     - Depending on the needs of performance, we can decide which one to use.
@@ -394,7 +394,7 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
     - Works with reference type instead of primitives. To use primitives, we can use wrappers.
     - The reason is, collection is playing with `Object`.
     - Generics helps us to decide `the type at compile time itself`.
-    - Diamonds of generics came form 1.7
+    - Diamonds(`<>`) of generics came from 1.7
     - List: (ArrayList), LinkedList - preserves insert order), Vector(similar to ArrayList. But synchronized):
         - internally array
         - This is similar to array but without fixed length.
@@ -436,7 +436,7 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
     - add(index, element): O(n)
     - get(index): O(1)
     - remove(): O(n). Iterates to find element
-    - indexOf(), caonatins(): O(n)
+    - indexOf(), contains(): O(n)
     - null value ok  
 
     ```
@@ -449,58 +449,58 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
       - takes more memory to store the pointers to next, previous elements
       - null ok
       - Order preserved
-      - Vector:
-        - Legacy data structure
-        - But now fully compatible to collections.
-        - Synchronized list (similar to arraylist but synchronized)
-        - Slow
-        - Fail-fast iterator
-        - Thread-safe
-        - Capacity doubled on demand. Not 50% like arraylist
-        - null ok
-      - HashSet:
-        - Backed by HashMap with default capacity 16 and loadFactor 0.75
-        - It has loadFactor
-        - Each add() comes as key to hashmap and value will be constant `new Object()`.
-        - Not order preserved
-        - No duplicates
-        - Not synchronized
-        - Fail-fast
-        - null ok
-      - LinkedHashSet:
-        - Order of insertion preserved
-        - Backed by LinkedHashMap
-        - Fail-fast
-        - null ok
-      - TreeSet:
-        - Sorted by default
-        - Backed by TreeMap.
-        - Derived from SortedSet
-        - Not preserving insertion order
-        - Elements should be Comparable or pass Comparator on create.
-        - Red-Black tree. So, O(logN) for all operations
-        - Fail-fast
-        - Use Collections.SynchronizedSortedSet to make it thread-safe.
-        - null not supported. (help sorting)
-      - HashTable:
-        - Synchronized map. Thread-safe
-        - Each operation is synchronized
-        - So, slow
-        - Fail-safe
-        - Null key or value not supported.
-      - HashMap:
-        - Key value pair
-        - Relies on equals() and hashCode() contract
-        - Fail-fast
-        - Not synchronized
-        - Order not preserved
-        - Fast O(1) insert/ retrieve
-        - Duplicate values ok. No duplicate keys.
-        - Has capacity 16 and load factor 0.75 by default.
-        - Capacity increase by 2^n and hence doubles everytime than previous value on reaching threshold
-        - No shrink on remove() as most of the time, when removes, there will be something to add.
-        - Better idea is to reinitialize the map when size() become 0 manually to make large space garbage collected.
-        - null ok as key and value
+    - Vector:
+      - Legacy data structure
+      - But now fully compatible to collections.
+      - Synchronized list (similar to arraylist but synchronized)
+      - Slow
+      - Fail-fast iterator
+      - Thread-safe
+      - Capacity doubled on demand. Not 50% like arraylist
+      - null ok
+    - HashSet:
+      - Backed by HashMap with default capacity 16 and loadFactor 0.75
+      - It has loadFactor
+      - Each add() comes as key to hashmap and value will be constant `new Object()`.
+      - Not order preserved
+      - No duplicates
+      - Not synchronized
+      - Fail-fast
+      - null ok
+    - LinkedHashSet:
+      - Order of insertion preserved
+      - Backed by LinkedHashMap
+      - Fail-fast
+      - null ok
+    - TreeSet:
+      - Sorted by default
+      - Backed by TreeMap.
+      - Derived from SortedSet
+      - Not preserving insertion order
+      - Elements should be Comparable or pass Comparator on create.
+      - Red-Black tree. So, O(logN) for all operations
+      - Fail-fast
+      - Use Collections.SynchronizedSortedSet to make it thread-safe.
+      - null not supported. (help sorting)
+    - HashTable:
+      - Synchronized map. Thread-safe
+      - Each operation is synchronized
+      - So, slow
+      - Fail-safe
+      - Null key or value not supported.
+    - HashMap:
+      - Key value pair
+      - Relies on equals() and hashCode() contract
+      - Fail-fast
+      - Not synchronized
+      - Order not preserved
+      - Fast O(1) insert/ retrieve
+      - Duplicate values ok. No duplicate keys.
+      - Has capacity 16 and load factor 0.75 by default.
+      - Capacity increase by 2^n and hence doubles everytime than previous value on reaching threshold
+      - No shrink on remove() as most of the time, when removes, there will be something to add.
+      - Better idea is to reinitialize the map when size() become 0 manually to make large space garbage collected.
+      - null ok as key and value
     ```
     HashMap Internals:
         1. Based on hashing
