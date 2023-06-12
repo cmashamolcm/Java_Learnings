@@ -553,10 +553,11 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
         - O(logN)
         - No null key. But null values ok
         - Performance is better. But insertion may be costly(logN) compared to HashMap due to the internal sorting.
-      -ConcurrentHashMap:
+      - ConcurrentHashMap:
         - java.util.concurrent
         - From 1.5 onwards
-        - Thread-safe with locking. Not synchronized. But with segment locking or bucket locking.
+        - Thread-safe with mechanism to synchronized lock on bucket on writes. No synchronization on read.
+        - Old implementation was based on locks. But now, its fully with synchronized block.
         - Fail-safe as iteration works on snapshots
         - Best for concurrent thread access
         - Initial capacity 16, load factor 0.75f
