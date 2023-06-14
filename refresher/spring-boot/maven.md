@@ -33,7 +33,7 @@
      - pre-clean
      - `clean` - 1
      - post-clean
-   - Default Life Cycle (project deployement)
+   - Default Life Cycle (project deployment)
      - validate - checks all necessary info to build project is available or not;
      - initialize
      - generate-sources
@@ -57,7 +57,7 @@
      - `verify` - 3 (verify the integration test results)
      - `install` - 4 (install package to local repo)
      - `deploy` -5 (copy package to remote repo)
-   - Site LifeCycle (for sire documentation)
+   - Site LifeCycle (for site documentation)
      - pre-site
      - site - 1
      - post-site
@@ -71,7 +71,7 @@
    - surefire:test : indicates that surefire maven plugin goal is run at phase 'test'
    - `mvn help:describe -Dcmd=PHASENAME` to find goals attached to each phase.
    - `mvn help:describe -Dcmd=compile`
-   - We can add goals with the help of `<plugins`
+   - We can add goals with the help of `<plugins>`
    - Eg: 
    - Here, failsafe plugin has 2 goals one attached to integration-test. Other one to verify
    - Use `mvn <pligin>:help` to find the goals in it.
@@ -103,7 +103,9 @@
     To chanage version of such depdencies, we just need to change in parent pom and children will get it unless it overridden that.
     dependency-management helps for flexible inheritance of dependencies.
    
-    Eg: extensitvely used by springboot. Whatever version is there for springboot parent, same comes for all springboot-starters as well.
+    Eg: extensitvely used by springboot. Whatever version is there for springboot-dependencies, same comes for all springboot-starters as well.
+    By default depdencies comes from parent to child. Also, explicitly mentioned ones from dependency management block as well.
+   
     ```
 7. *Scope*: 6 default scopes
     - `<scope>compile</scope>`: Default scope. Mandatory for the project to get compiled. Will be bundled with package.
@@ -169,3 +171,29 @@
     - generate xml, html, csv reports as we need.
     - `Surefire and Failsafe runs the test and generates basic reports. JaCoCo collects test report from JVM and presents in feature rich.`
     - https://ccbill.com/blog/code-coverage-with-surefire-and-jacoco
+9. `<java.version>19</java.version>` is specific to springboot.
+10. `Springboot uses springboot-maven-plugin.`
+11. We can use `<parent>`
+    `<parent>
+     <groupId>org.springframework.boot</groupId>
+     <artifactId>spring-boot-starter-parent</artifactId>
+     <version>2.7.3</version>
+     </parent>`
+    to inherit the parent pom for our application.
+    - This makes sure that parent contains all versions etc and children gets it by inheritance
+    - and forms an `effective pom` to use at child projects.
+    - Advantage is change is to be done in only parent and others will get it.
+    - We can add `pom as dependency as well with type as pom and scope as import`.
+    - In that case, we get versions of a explicitly added(in user pom) dependencies from dependency-management part of imported pom.
+    - This is an alternative way to inherit without `<parent>` tag.
+    - We have only one parent tag. Instead of growing parent pom to big file, use import pom alongside.
+12. In case of springboot,
+    ```
+    There is springboot-starter-parent as parent dependency.
+    So, we will get configs, dependency-management etc from it.
+    springboot-starter-parent has parent spring-boot-dependencies.
+    This has a lot of dependency-management.
+    So, in our project, indirectly, with dependencies without specifying version, we can import those from these parent and grand parent.
+    If anything apart from this comes, either we can go for a pom and inherit springboot-starter-parent to it and then use that pom as parent.
+    Or, import relevant dependencies with import scope and use it in each pom. More loosely coupled.
+    ```

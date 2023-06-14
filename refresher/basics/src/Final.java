@@ -27,6 +27,10 @@ class AFinal{
 
     }
 
+    private void addOnlyPrivate(){
+
+    }
+
     final void addFinal(){
 
     }
@@ -44,6 +48,10 @@ class BFinal extends AFinal{
 
     final void addPrivateFinal(){
         //System.out.println(fromA);// will not be visible as fromA is private
+
+    }
+
+    private void addOnlyPrivate(){// can be done as private one from parent is not visible here.
 
     }
 

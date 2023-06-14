@@ -1,0 +1,1 @@
+insert into developer("dev_name", "id") values("Asha", 1);
