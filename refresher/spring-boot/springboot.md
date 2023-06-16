@@ -25,7 +25,6 @@
       A light weight version of same is in spring as well.
    ```
    
-   
 3. Spring:
    - Framework for easy JavaEE app development. Not spec. It is framework.
    - This is also addressing the horizontal concerns. But with light weight containers.
@@ -289,9 +288,9 @@
       If-None-Match or If-Match header in upcoming requests to get 304 on no change.
       Eg:
       curl --location --request GET 'http://localhost:8080/etag' \header 'If-None-Match: "0628155dbf834441bb58f8ab9347a9718"'
-      ```
+      ```[README.md](..%2F..%2F..%2F..%2F..%2FDownloads%2Ftr-backend-challenge-simplified-1.1.4%202%2FREADME.md)
       - Refer: https://javadeveloperzone.com/spring-boot/spring-boot-etag-header-example/
-12. Component vs Controller vs RestController vs Service Repository:
+12. Component vs Controller vs RestController vs Service vs Repository:
     - Component - stereotype for any spring component. Scanned by @ComponentScan. All others are derived from component.
       - Component is kind of bean itself. But this annotation is in class level and @Bean is in method level.
     - Controller - indication to handler mapping to identify endpoints
@@ -309,6 +308,11 @@
     - `@EnableScheduling` will ensure that background task executors are created so that we can schedule our jobs.
     - `@Configuration`: tags a class a source of beans
     - `@EnableAutoConfiguration`: tells springboot to start adding beans based on settings from xml, dependencies in pom etc.
+    - There is a jar `spring-boot-autoconfigure` having file called `spring.factories` in `META_INF`. This is used to identify the autoconfigure.
+    - Similarly, if we want to create a library with auto-configurable beans, add `spring.factories` in `META_INF`
+    - From springboot 3.x, it is changed to `META_INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`
+    - We define META-INF folder in `resource` folder of project src.
+    - Refer `custom-auto-config` project for reference. Used in `doctor-service` project.
     - Eg: If spring-webmvc is there, add DispatcherServlet
     - `@ComponentScan`: to tell spring to look for components, configurations, services etc in given package.
     - ***@SpringbootApplication***: @Configuration, @AutoConfiguration, @ComponentScan

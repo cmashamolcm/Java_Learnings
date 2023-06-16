@@ -4,34 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82fe6719-92d5-4273-89d1-e3f048b5dbf8" name="Changes" comment="maven">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Computer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Desktop.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DevModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DevOpsModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DevRestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Developer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DeveloperController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DeveloperRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/EtagConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Laptop.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Model.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/MyBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/MyController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/RestRepoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Scheduler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/resources/data.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/dev.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/home.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../basics/src/Final.java" beforeDir="false" afterPath="$PROJECT_DIR$/../basics/src/Final.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="82fe6719-92d5-4273-89d1-e3f048b5dbf8" name="Changes" comment="springboot">
+      <change afterPath="$PROJECT_DIR$/microservices.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../springboot-echo-system/custom-auto-config/src/main/java/com/auto/config/customautoconfig/CustomAutoConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../springboot-echo-system/custom-auto-config/src/main/java/com/auto/config/customautoconfig/CustomBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../springboot-echo-system/custom-auto-config/src/main/resources/META-INF/org.springframework.boot.autoconfigure.AutoConfiguration.imports" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../springboot-echo-system/custom-auto-config/src/main/resources/META-INF/spring.factories" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maven.md" beforeDir="false" afterPath="$PROJECT_DIR$/maven.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot.md" beforeDir="false" afterPath="$PROJECT_DIR$/springboot.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,11 +95,19 @@
       <option name="project" value="LOCAL" />
       <updated>1686143571776</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="springboot">
+      <created>1686739434184</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1686739434184</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="maven" />
-    <option name="LAST_COMMIT_MESSAGE" value="maven" />
+    <MESSAGE value="springboot" />
+    <option name="LAST_COMMIT_MESSAGE" value="springboot" />
   </component>
 </project>
