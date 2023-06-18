@@ -157,5 +157,12 @@ public class StructuralDesignPatterns {
 
     }
 
+    //bridge - one inheritance and one composition instead of single inheritance to avoid too many implementations.
+    //Eg: Shape -- RedCircle, GreenCircle, BlackSquare etc.
+    // instead, Make Color as class and add composition to Shape.
+    //Shape{Color}. So, any shape and any color can be there. One square is enough to use for any color square.
+    // here, color is bridge between color and shape.
+    // https://refactoring.guru/design-patterns/bridge
+
 
 }
