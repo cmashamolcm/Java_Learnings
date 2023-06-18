@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82fe6719-92d5-4273-89d1-e3f048b5dbf8" name="Changes" comment="git, contract testing, desig patterns, maturity models">
-      <change afterPath="$PROJECT_DIR$/src/main/java/BehavioralDesignPatterns.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="82fe6719-92d5-4273-89d1-e3f048b5dbf8" name="Changes" comment="design patterns" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -128,14 +125,33 @@
       <option name="project" value="LOCAL" />
       <updated>1687046779302</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="design patterns">
+      <created>1687095340931</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1687095340931</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="maven" />
     <MESSAGE value="springboot" />
     <MESSAGE value="microservices.md" />
     <MESSAGE value="git, contract testing, desig patterns, maturity models" />
-    <option name="LAST_COMMIT_MESSAGE" value="git, contract testing, desig patterns, maturity models" />
+    <MESSAGE value="design patterns" />
+    <option name="LAST_COMMIT_MESSAGE" value="design patterns" />
   </component>
 </project>
