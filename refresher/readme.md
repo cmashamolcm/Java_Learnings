@@ -792,3 +792,25 @@ try(autoclosable resource){// here, this resource will be closed if try succeeds
       - To add no-static variables, update the canonical constructor.
       - This will be `immutable`. Not setter. Getters with same name of parameters
       - Best suitable for immutable models used to send data from REST endpoint etc.
+45. Composition vs Association:
+    - Composition = strict part-of. Eg: clock and needles. 
+                    Child and parent are tightly coupled. Car and engine. When car dies, engine also.
+    ```
+        class Car{
+            Engine e = new Engine();// this goes GCed when car is GCed.
+        }
+    
+    ```
+    - Association = not so strict has-a. Eg: Parent has a relationship with child.
+                    Car and passengers. Both can exist by its own.
+    ```
+        class Car{
+            Engine e;
+            Car(Engine e){
+                this.e = e;// here, e lives even if Car is GCed.
+            }
+    
+        }
+    
+    ```
+    - Inheritance = is-a

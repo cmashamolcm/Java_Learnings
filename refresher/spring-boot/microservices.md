@@ -59,7 +59,8 @@
       * Logs are treated as streams
       * Admin processes also is a one-off process
 5. Design Patterns for microservices:
-   1. `Aggregator`: One service will contact all others to collect data and return it to client
+   1. `Aggregator`: One service will contact all others to collect data and return it to client.
+      Relies on DRY principle (Do't Repeat Yourself. Instead, services are individual and aggregator takes responsibility to combine their job)
     ```
     client <----->Aggregator Service----->Service A
                                     ----->Service B
@@ -92,5 +93,16 @@
    ```
    client ----clircuit breaker -------load balancer ------service ecosystem
    ```
-   
-   
+6. Coulpling and Conhesion:
+      - Cohesion - inter-relation in a bounded context
+      - Couping - Intra-relation across bounded context
+      - Best is high cohesion, loose coupling
+7. Microservice vs REST: Both are architectual styles. But REST is a way to build microservices.
+8. Conway's Law: Organization structure and microservice system are in sync.
+9. DRY: Do not Repeat Yourself and build libraries. Ensure to have less duplicates
+10. `Richardson Maturity Model`:
+   - Level `0`: No specific endpoint. Has one endpoint and routes to multiple resources. `NOT T ALL RESUful`. One URI with POST only,
+   - Level `1`: Resource specific end points. HtTP is used. But HTTP methods are not used in the right way. `PARTIAL RESTful`. But still only POST.
+   - Level `2`: Resource specific URLs and proper use of HTTP verbs. Response also with proper HTTP status code. `URI + proper HTTP methods + Response codes`
+   - Level `3`: HATEOS. Data + next action specified as response. `URI + proper HTTP verb + response code + next action(hyperlinks/ hypermedia)`
+   - https://www.youtube.com/watch?v=0e8ttxYPNEw

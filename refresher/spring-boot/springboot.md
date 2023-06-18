@@ -316,3 +316,5 @@
     - Eg: If spring-webmvc is there, add DispatcherServlet
     - `@ComponentScan`: to tell spring to look for components, configurations, services etc in given package.
     - ***@SpringbootApplication***: @Configuration, @AutoConfiguration, @ComponentScan
+13. Springboot 1.x vs 2.x vs 3.x:
+14. 
