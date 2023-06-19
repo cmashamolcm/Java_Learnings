@@ -248,12 +248,23 @@
    Detach helps to protect from update by mistake.
    @Transactional(readOnly=true) also helps here to avoid unexpected writes.
    ---------------------------------------------------GCed------------------------------------------------------------------------------------------
-   
+    ```
 
 9. find vs get:
     - find not throws exception on not found. Returns optional.
     - get throws exception.
     - session.get() vs session.load(): load gives proxy object where get() gives real object from database.
-                                                                                                        
+10. JPA:
+    - Java Persistence API
+    - Different tools are there like Hibernate, Ibatis to implement ORM.
+    - To have a specification for ORM tools to standardize it to make switching easier, JPA came.
+    - Hibernate, Ibatis etc will rely on JPA.
+    - `EntityManager` is `persistence context` and it is standard from JPA.
+    - Sessions and transactions reside inside that.
+    - We need to begin and commit transaction to persist it in database. Without commit, it will nto get reflected.
+    - In @Transactional, every operation comes under same session and single transaction and commit happens at the end of it.
+    - If we give @Transactional(readOnly=true), (by default is false), ensures read optimizations by hibernate or ibatis and also prevents unexpected updates to actual object.
+    - JpaRepository is default @Transactional(readOnly=true) but it can be overridden.
+    - @Transactional is re-entrant.
        
-    ```
+   
