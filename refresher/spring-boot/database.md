@@ -266,5 +266,43 @@
     - If we give @Transactional(readOnly=true), (by default is false), ensures read optimizations by hibernate or ibatis and also prevents unexpected updates to actual object.
     - JpaRepository is default @Transactional(readOnly=true) but it can be overridden.
     - @Transactional is re-entrant.
-       
-   
+11. Query Optimization:
+    - By analysing `query execution plans`
+    - Indexing on join columns can help
+    - Avoiding usage of functions on indexed columns can help
+12. Choosing database:
+    - May add Cache layer
+    - May add replica
+13. JOINS:
+    - Prerequisite:
+        - create table https://gist.github.com/YujiShen/39f6ef573ada22b87998
+      ```
+      SELECT * FROM EMP ;
+      SELECT * FROM DEPT ;
+      select count(e.ename) count, d.DNAME as DNAME from EMP e left join DEPT d on e.DEPTNO=d.DEPTNO group by DNAME having count>=5;
+      select count(e.ename), d.DNAME as DNAME from EMP e left join DEPT d on e.DEPTNO=d.DEPTNO group by DNAME;
+      select e.ename as EMP_NAME from EMP e left join EMP m on e.MGR=m.EMPNO where e.MGR=7698;
+
+      select e.ename as EMP_NAME, m.ename as MGR_NAME from EMP e left join EMP m on e.MGR=m.EMPNO;
+      select e.ename as EMP_NAME, m.ename as MGR_NAME from EMP e inner join EMP m on e.MGR=m.EMPNO;
+
+      select e.ename, d.dname from EMP e left join DEPT d on e.DEPTNO=d.DEPTNO;
+
+      SELECT * FROM EMP e JOIN DEPT d on e.DEPTNO=d.DEPTNO;
+
+      SELECT * FROM EMP e RIGHT JOIN DEPT d on e.DEPTNO=d.DEPTNO;
+      SELECT * FROM DEPT e RIGHT JOIN EMP d on e.DEPTNO=d.DEPTNO;
+
+      SELECT * FROM EMP e LEFT JOIN DEPT d on e.DEPTNO=d.DEPTNO;
+      SELECT * FROM DEPT d LEFT JOIN EMP e on e.DEPTNO=d.DEPTNO;
+      SELECT * FROM EMP e INNER JOIN DEPT d on e.DEPTNO=d.DEPTNO;
+
+     ```
+14. N+1 Query Problem:
+    - When we have multiple tables involved, we might need to make one query to one table.
+    - Then take N foreign keys from that table to the other table and query N times to the related table to get data from it.
+    - Combine the result.
+    - Here, we make 1 query first and then N queries and `N+1` queries in total.
+    - To avoid this, try to join queries as database is smart to optimize joins than dealing with lot many independent queries.
+    - One approach to solve N+1 issue is using `JOIN`s.
+    - https://planetscale.com/blog/what-is-n+1-query-problem-and-how-to-solve-it

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doctor-app
+  labels:
+    app: doctor
+    #above app label used by Service to identify the deployment/ pods. selector in service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: doctor
+      # this match label ensures that this deployment is applicable to pods with label matching doctor. Actual pod label is under template:metadata:labels
+  template:
+    metadata:
+      labels:
+        app: doctor
+        # helps to make each pod labelled with doctor
+    spec:
+      containers:
+        - name: doctor-service
+          image: manikuttyselffav/test-tag
+          ports:
+           - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: doctor-service
+spec:
+# default is ClusterIP. NodePort makes service External service
+  type: NodePort
+  selector:
+    app: doctor
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30100
+# must have 30000 range
+
